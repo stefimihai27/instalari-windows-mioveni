@@ -1,193 +1,21 @@
 <!DOCTYPE html>
-<html lang="ro" class="scroll-smooth">
+<html>
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Instalări Windows ┃ Mioveni - Servicii IT Profesionale</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#195de6",
-                        "background-light": "#f6f6f8",
-                        "background-dark": "#111621",
-                    },
-                    fontFamily: {
-                        "display": ["Inter", "sans-serif"]
-                    },
-                },
-            },
-        }
-    </script>
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
+  <meta charset="utf-8" />
+  <title>Panou Administrare</title>
+  <script>
+    // Verificare simplă la intrare
+    const user = prompt("Utilizator:");
+    const pass = prompt("Parolă:");
+
+    if (user !== "admin" || pass !== "admin2026") {
+      alert("Acces interzis!");
+      window.location.href = "/"; 
+    }
+  </script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
-
-    <nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center gap-2">
-                    <div class="bg-primary p-2 rounded-lg">
-                        <span class="material-icons text-white">desktop_windows</span>
-                    </div>
-                    <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-                        Windows<span class="text-primary">Mioveni</span>
-                    </span>
-                </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a class="text-sm font-semibold text-primary" href="#">Acasă</a>
-                    <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#servicii">Servicii</a>
-                    <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#preturi">Prețuri</a>
-                    <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#contact">Contact</a>
-                </div>
-                <div class="hidden md:block">
-                    <a class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 text-primary font-bold hover:bg-primary/20 transition-all" href="tel:0700000000">
-                        <span class="material-icons text-sm">phone</span>
-                        07xx xxx xxx
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <header class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-background-light dark:bg-background-dark">
-        <div class="absolute inset-0 z-0">
-            <img alt="Clean workspace" class="w-full h-full object-cover opacity-20" src="https://images.unsplash.com/photo-1588702547919-26089e690eca?auto=format&fit=crop&q=80&w=2070"/>
-            <div class="absolute inset-0 bg-gradient-to-r from-background-light via-background-light/95 to-transparent dark:from-background-dark dark:via-background-dark/95"></div>
-        </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-24">
-            <div class="max-w-3xl">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-6 border border-primary/20">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                    </span>
-                    Servicii Disponibile în Mioveni
-                </div>
-                <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white leading-tight mb-6">
-                    Instalări Windows <span class="text-primary">┃</span> Mioveni
-                </h1>
-                <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed mb-10 max-w-2xl">
-                    Servicii profesionale de instalare sisteme de operare, actualizare drivere și optimizare software pentru performanță maximă.
-                </p>
-                <div class="flex flex-col sm:flex-row items-center gap-4">
-                    <button class="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 group">
-                        Programare Rapidă
-                        <span class="material-icons group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                    </button>
-                    <a href="#preturi" class="w-full sm:w-auto px-8 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-center text-slate-700 dark:text-slate-200 font-bold rounded-xl transition-all">
-                        Vezi Prețuri
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <section id="servicii" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-            <div class="inline-block px-4 py-1.5 mb-4 text-sm font-semibold tracking-wide uppercase text-primary bg-primary/10 rounded-full">Soluții IT Profesionale</div>
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">Serviciile Noastre</h2>
-            <div class="w-20 h-1.5 bg-primary mx-auto rounded-full mb-6"></div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="group p-8 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all flex flex-col h-full">
-                <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
-                    <span class="material-icons-outlined text-3xl text-primary group-hover:text-white">window</span>
-                </div>
-                <h3 class="text-xl font-bold mb-3">Instalare Windows</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow">Instalare profesională pentru Windows 10 și 11, activare licență și configurări inițiale.</p>
-            </div>
-            <div class="group p-8 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all flex flex-col h-full">
-                <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
-                    <span class="material-icons-outlined text-3xl text-primary group-hover:text-white">speed</span>
-                </div>
-                <h3 class="text-xl font-bold mb-3">Optimizare Sistem</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow">Curățare software, eliminare fișiere temporare și optimizare startup.</p>
-            </div>
-            <div class="group p-8 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all flex flex-col h-full">
-                <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
-                    <span class="material-icons-outlined text-3xl text-primary group-hover:text-white">settings_suggest</span>
-                </div>
-                <h3 class="text-xl font-bold mb-3">Drivere & Programe</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow">Instalare drivere compatibile, suită Office și browsere.</p>
-            </div>
-            <div class="group p-8 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all flex flex-col h-full">
-                <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
-                    <span class="material-icons-outlined text-3xl text-primary group-hover:text-white">settings_backup_restore</span>
-                </div>
-                <h3 class="text-xl font-bold mb-3">Recuperare Date</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow">Recuperare profesională a fișierelor pierdute sau șterse accidental.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="preturi" class="py-20 px-4">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Servicii și Tarife</h2>
-            </div>
-            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-8 flex flex-col hover:shadow-md transition-all">
-                    <h3 class="text-xl font-bold mb-2">Pachet Basic</h3>
-                    <div class="text-4xl font-bold my-6">100 RON</div>
-                    <ul class="space-y-4 mb-10 flex-grow">
-                        <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Instalare Windows (10/11)</span></li>
-                        <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Drivere de bază</span></li>
-                    </ul>
-                    <button class="w-full py-3 rounded-lg border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">Solicită Pachet</button>
-                </div>
-                <div class="bg-white dark:bg-slate-800 rounded-xl border-2 border-primary p-8 flex flex-col relative transform scale-105 shadow-xl">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white px-4 py-1 rounded-full text-xs font-bold uppercase">Recomandat</div>
-                    <h3 class="text-xl font-bold mb-2">Pachet Complet</h3>
-                    <div class="text-4xl font-bold my-6">180 RON</div>
-                    <ul class="space-y-4 mb-10 flex-grow">
-                        <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Windows + Optimizare</span></li>
-                        <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Backup date & Office</span></li>
-                    </ul>
-                    <button class="w-full py-3 rounded-lg bg-primary text-white font-bold hover:bg-blue-700 transition-all shadow-lg shadow-primary/20">Solicită Pachet</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-20 bg-slate-50 dark:bg-slate-900/50">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="grid lg:grid-cols-2 gap-12">
-                <div>
-                    <h2 class="text-3xl font-bold mb-6">Contactează-ne</h2>
-                    <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                        <form class="space-y-4">
-                            <input class="w-full px-4 py-2 rounded border border-slate-300 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-primary" placeholder="Nume" type="text"/>
-                            <input class="w-full px-4 py-2 rounded border border-slate-300 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-primary" placeholder="Telefon" type="tel"/>
-                            <textarea class="w-full px-4 py-2 rounded border border-slate-300 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-primary" placeholder="Mesaj" rows="4"></textarea>
-                            <button class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-all">Trimite Mesaj</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="space-y-8">
-                    <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                        <h3 class="font-bold mb-4 flex items-center gap-2"><span class="material-icons text-primary">schedule</span>Program</h3>
-                        <p class="flex justify-between border-b pb-2"><span>Luni - Vineri</span><b>09:00 - 18:00</b></p>
-                        <p class="flex justify-between pt-2"><span>Sâmbătă</span><b>10:00 - 14:00</b></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-8">
-        <div class="max-w-6xl mx-auto px-4 text-center text-sm text-slate-500">
-            <p>© 2024 Service IT Mioveni. Toate drepturile rezervate.</p>
-        </div>
-    </footer>
-
+<body>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
