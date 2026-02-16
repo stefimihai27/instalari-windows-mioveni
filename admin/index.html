@@ -4,18 +4,44 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panou Administrare</title>
-  <script>
-    const user = prompt("Utilizator:");
-    const pass = prompt("Parolă:");
-    if (user !== "admin" || pass !== "admin2026") {
-      alert("Acces interzis!");
-      window.location.href = "/"; 
-    }
-  </script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <link rel="cms-config-url" type="text/yaml" href="/admin/config.yml" />
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    CMS.init({
+      config: {
+        backend: {
+          name: "github",
+          repo: "stefimihai27/instalari-windows-mioveni",
+          branch: "main",
+          auth_type: "token" 
+        },
+        load_config_file: false,
+        display_url: "https://instalari-windows-mioveni.vercel.app",
+        media_folder: "img",
+        public_folder: "img",
+        collections: [
+          {
+            name: "setari",
+            label: "Administrare Site",
+            files: [
+              {
+                name: "home",
+                label: "Pagina Principală",
+                file: "index.html",
+                fields: [
+                  { label: "Titlu Principal", name: "hero_title", widget: "string" },
+                  { label: "Telefon", name: "phone", widget: "string" },
+                  { label: "Preț Pachet Basic", name: "price_basic", widget: "string" },
+                  { label: "Preț Pachet Complet", name: "price_complet", widget: "string" }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    });
+  </script>
 </body>
 </html>
