@@ -1,45 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="ro">
 <head>
-  <meta charset="utf-8" />
-  <title>Panou Administrare</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Panou Control | Windows Mioveni</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        /* Stiluri pentru a ascunde interfața standard Decap și a o lăsa doar pe cea de editare */
+        .nc-app-view-main { background-color: #f8fafc !important; }
+    </style>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  <script>
-    CMS.init({
-      config: {
-        backend: {
-          name: "github",
-          repo: "stefimihai27/instalari-windows-mioveni",
-          branch: "main",
-          base_url: "https://prive.vercel.app", // Acesta este "podul" pentru login direct
-          auth_endpoint: "api/auth"
-        },
-        load_config_file: false,
-        display_url: "https://instalari-windows-mioveni.vercel.app",
-        collections: [
-          {
-            name: "setari",
-            label: "Administrare Site",
-            files: [
-              {
-                name: "home",
-                label: "Pagina Principală",
-                file: "index.html",
-                fields: [
-                  { label: "Titlu Principal", name: "hero_title", widget: "string" },
-                  { label: "Telefon", name: "phone", widget: "string" },
-                  { label: "Preț Pachet Basic", name: "price_basic", widget: "string" },
-                  { label: "Preț Pachet Complet", name: "price_complet", widget: "string" }
+    <script>
+        const user = prompt("Utilizator:");
+        const pass = prompt("Parolă:");
+        if (user !== "admin" || pass !== "admin2026") {
+            alert("Acces interzis!");
+            window.location.href = "/"; 
+        }
+    </script>
+
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script>
+        CMS.init({
+            config: {
+                backend: {
+                    name: "github",
+                    repo: "stefimihai27/instalari-windows-mioveni",
+                    branch: "main",
+                    auth_type: "token" // Cea mai sigură metodă pe Vercel
+                },
+                load_config_file: false,
+                display_url: "https://instalari-windows-mioveni.vercel.app",
+                media_folder: "img",
+                public_folder: "img",
+                collections: [
+                    {
+                        name: "setari",
+                        label: "Design & Texte Site",
+                        files: [
+                            {
+                                name: "home",
+                                label: "Dashboard Principal",
+                                file: "index.html",
+                                fields: [
+                                    { label: "TITLU HOME:", name: "hero_title", widget: "string" },
+                                    { label: "DESCRIERE HOME:", name: "hero_desc", widget: "text" },
+                                    { label: "TELEFON:", name: "phone", widget: "string" },
+                                    { label: "PRET BASIC (RON):", name: "price_basic", widget: "string" },
+                                    { label: "PRET COMPLET (RON):", name: "price_complet", widget: "string" }
+                                ]
+                            }
+                        ]
+                    }
                 ]
-              }
-            ]
-          }
-        ]
-      }
-    });
-  </script>
+            }
+        });
+    </script>
 </body>
 </html>
