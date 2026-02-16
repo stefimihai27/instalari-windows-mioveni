@@ -1,0 +1,20 @@
+backend:
+  name: github
+  repo: stefimihai27/instalari-windows-mioveni
+  branch: main
+
+media_folder: "img"
+public_folder: "img"
+
+collections:
+  - name: "setari"
+    label: "Administrare Site"
+    files:
+      - name: "home"
+        label: "Pagina Principală"
+        file: "index.html"
+        fields:
+          - {label: "Titlu Hero", name: "hero_title", widget: "string"}
+          - {label: "Telefon", name: "phone", widget: "string"}
+          - {label: "Pret Basic", name: "price_basic", widget: "string"}
+          - {label: "Pret Complet", name: "price_complet", widget: "string"}
