@@ -3,25 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panou Administrare IT Mioveni</title>
-  
+  <title>Panou Administrare</title>
   <script>
     // Verificarea ta de acces
     const user = prompt("Utilizator:");
     const pass = prompt("Parolă:");
-
     if (user !== "admin" || pass !== "admin2026") {
       alert("Acces interzis!");
       window.location.href = "/"; 
     }
   </script>
-
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
   <script>
-    // Această secțiune elimină nevoia de config.yml extern
+    // Inițializare forțată și curată
     CMS.init({
       config: {
         backend: {
@@ -29,7 +27,8 @@
           repo: "stefimihai27/instalari-windows-mioveni",
           branch: "main",
         },
-        load_config_file: false, // OBLIGATORIU: Îi spunem să NU mai caute config.yml
+        load_config_file: false, // Ignoră fișierul extern config.yml
+        display_url: "https://instalari-windows-mioveni.vercel.app",
         media_folder: "img",
         public_folder: "img",
         collections: [
