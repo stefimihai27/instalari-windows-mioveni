@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: UTILIZATOR/REPO # <-- SCHIMBĂ AICI (ex: ionpopescu/mioveni-it)
+  repo: stefimihai27/instalari-windows-mioveni
   branch: main
 
 media_folder: "img"
@@ -17,19 +17,15 @@ collections:
           - label: "Titlu Principal (Hero)"
             name: "hero_title"
             widget: "string"
-            default: "Instalări Windows ┃ Mioveni"
 
           - label: "Număr Telefon Contact"
             name: "phone"
             widget: "string"
-            default: "07xx xxx xxx"
 
           - label: "Preț Pachet Basic"
             name: "price_basic"
             widget: "string"
-            default: "100 RON"
 
           - label: "Preț Pachet Complet"
             name: "price_complet"
             widget: "string"
-            default: "180 RON"
