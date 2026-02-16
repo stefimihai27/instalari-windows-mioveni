@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panou Administrare</title>
   <script>
-    // Verificarea ta
     const user = prompt("Utilizator:");
     const pass = prompt("Parolă:");
     if (user !== "admin" || pass !== "admin2026") {
@@ -14,6 +13,7 @@
     }
   </script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <link rel="cms-config-url" type="text/yaml" href="/admin/config.yml" />
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
