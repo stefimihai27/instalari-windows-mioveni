@@ -2,7 +2,6 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panou Administrare</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
@@ -15,12 +14,11 @@
           name: "github",
           repo: "stefimihai27/instalari-windows-mioveni",
           branch: "main",
-          auth_type: "token" 
+          base_url: "https://prive.vercel.app", // Acesta este "podul" pentru login direct
+          auth_endpoint: "api/auth"
         },
         load_config_file: false,
         display_url: "https://instalari-windows-mioveni.vercel.app",
-        media_folder: "img",
-        public_folder: "img",
         collections: [
           {
             name: "setari",
