@@ -2,9 +2,10 @@
 <html>
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panou Administrare</title>
+  
   <script>
-    // Verificare simplă la intrare - Păstrată conform solicitării
     const user = prompt("Utilizator:");
     const pass = prompt("Parolă:");
 
@@ -13,19 +14,25 @@
       window.location.href = "/"; 
     }
   </script>
+
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  
+  <link href="config.yml" type="text/yaml" rel="cms-config-url">
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
   <script>
-    // Configurarea integrată (In-line) pentru a evita eroarea 404
+    // Configurația Inline
     window.CMS_CONFIGURATION = {
       config: {
         backend: {
           name: "github",
           repo: "stefimihai27/instalari-windows-mioveni",
           branch: "main",
+          base_url: "https://prive.vercel.app", // Necesar pentru autentificare externă dacă nu folosești Netlify
         },
+        display_url: "https://instalari-windows-mioveni.vercel.app",
         media_folder: "img",
         public_folder: "img",
         collections: [
@@ -49,6 +56,18 @@
         ]
       }
     };
+  </script>
+
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
   </script>
 </body>
 </html>
