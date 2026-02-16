@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panou Administrare</title>
+  <title>Panou Administrare IT Mioveni</title>
   
   <script>
+    // Verificarea ta de acces
     const user = prompt("Utilizator:");
     const pass = prompt("Parolă:");
 
@@ -16,23 +17,19 @@
   </script>
 
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  
-  <link href="config.yml" type="text/yaml" rel="cms-config-url">
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-
   <script>
-    // Configurația Inline
-    window.CMS_CONFIGURATION = {
+    // Această secțiune elimină nevoia de config.yml extern
+    CMS.init({
       config: {
         backend: {
           name: "github",
           repo: "stefimihai27/instalari-windows-mioveni",
           branch: "main",
-          base_url: "https://prive.vercel.app", // Necesar pentru autentificare externă dacă nu folosești Netlify
         },
-        display_url: "https://instalari-windows-mioveni.vercel.app",
+        load_config_file: false, // OBLIGATORIU: Îi spunem să NU mai caute config.yml
         media_folder: "img",
         public_folder: "img",
         collections: [
@@ -55,19 +52,7 @@
           }
         ]
       }
-    };
-  </script>
-
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
-        }
-      });
-    }
+    });
   </script>
 </body>
 </html>
