@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panou Administrare</title>
   <script>
-    // Verificarea ta de acces
+    // Verificarea ta
     const user = prompt("Utilizator:");
     const pass = prompt("Parolă:");
     if (user !== "admin" || pass !== "admin2026") {
@@ -17,41 +17,5 @@
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-
-  <script>
-    // Inițializare forțată și curată
-    CMS.init({
-      config: {
-        backend: {
-          name: "github",
-          repo: "stefimihai27/instalari-windows-mioveni",
-          branch: "main",
-        },
-        load_config_file: false, // Ignoră fișierul extern config.yml
-        display_url: "https://instalari-windows-mioveni.vercel.app",
-        media_folder: "img",
-        public_folder: "img",
-        collections: [
-          {
-            name: "setari",
-            label: "Administrare Site",
-            files: [
-              {
-                name: "home",
-                label: "Pagina Principală",
-                file: "index.html",
-                fields: [
-                  { label: "Titlu Principal (Hero)", name: "hero_title", widget: "string" },
-                  { label: "Număr Telefon Contact", name: "phone", widget: "string" },
-                  { label: "Preț Pachet Basic", name: "price_basic", widget: "string" },
-                  { label: "Preț Pachet Complet", name: "price_complet", widget: "string" }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    });
-  </script>
 </body>
 </html>
