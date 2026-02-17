@@ -1,5 +1,19 @@
 <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 <script>
+    // --- START LOGICA PAROLA SIMPLA ---
+    // Această parte se execută prima, înainte de orice altceva
+    const utilizatorCorect = "admin";
+    const parolaCorecta = "admin2026";
+
+    const inputUser = prompt("Utilizator:");
+    const inputPass = prompt("Parolă:");
+
+    if (inputUser !== utilizatorCorect || inputPass !== parolaCorecta) {
+        alert("Acces interzis! Date incorecte.");
+        window.location.href = "/"; // Îl trimite pe prima pagină dacă greșește
+    }
+    // --- END LOGICA PAROLA SIMPLA ---
+
     // 1. INIȚIALIZARE CMS
     CMS.init({
       config: {
@@ -34,24 +48,23 @@
     });
 
     // 2. LOGICA DE NETLIFY IDENTITY
+    // Deoarece folosim prompt-ul de mai sus, Identity rămâne doar ca o barieră secundară dacă e activat
     if (window.netlifyIdentity) {
         netlifyIdentity.on('init', user => {
-            if (!user) {
-                window.location.href = '/';
+            if (!user && !window.location.hash) { 
+                // Dacă nu e logat prin Identity, forțăm deschiderea widget-ului
+                netlifyIdentity.open();
             } else {
-                document.getElementById('loading-screen').classList.add('hidden');
-                document.getElementById('admin-content').classList.remove('hidden');
-                document.getElementById('logout-btn').classList.remove('hidden');
-                // Sincronizăm datele din GitHub cu câmpurile tale la încărcare
+                document.getElementById('loading-screen')?.classList.add('hidden');
+                document.getElementById('admin-content')?.classList.remove('hidden');
+                document.getElementById('logout-btn')?.classList.remove('hidden');
                 setTimeout(loadAdminDataFromCMS, 2000); 
             }
         });
     }
 
-    // 3. FUNCȚII DE SALVARE CORECtate
-    // Această funcție face legătura între input-ul tău și motorul de salvare GitHub
+    // 3. FUNCȚII DE SALVARE CORECTATE
     function syncAndSave(fieldName, value) {
-        // Notificăm CMS-ul că am schimbat o valoare
         window.CMS.getEditor().setFieldValue(fieldName, value);
         alert(`Valoarea pentru ${fieldName} a fost pregătită. Apasă butonul "Publish" din bara Decap pentru a finaliza salvarea pe site.`);
     }
@@ -67,7 +80,6 @@
         syncAndSave('phone', phone);
     }
 
-    // Această funcție ia prețurile reale din fișierul index.html și le pune în input-urile tale
     function loadAdminDataFromCMS() {
         try {
             const entry = window.CMS.getEntry('setari', 'home');
@@ -81,4 +93,4 @@
             console.log("Se încarcă motorul CMS...");
         }
     }
-</script>
+</script>S
