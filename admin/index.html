@@ -1,151 +1,84 @@
-<!DOCTYPE html>
-<html lang="ro" class="scroll-smooth dark">
-<head>
-    <!-- Toate meta și stilurile existente din pagina principală -->
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Admin - Windows Mioveni</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <!-- Restul head-ului identic -->
-</head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
-    
-    <!-- Navbar Admin -->
-    <nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <a href="/" class="flex items-center gap-2">
-                    <div class="bg-primary p-2 rounded-lg">
-                        <span class="material-icons text-white">desktop_windows</span>
-                    </div>
-                    <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-                        Windows<span class="text-primary">Mioveni</span> Admin
-                    </span>
-                </a>
-                <div class="flex items-center gap-4">
-                    <button id="logout-btn" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg hidden">
-                        Deconectare
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
+<script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+<script>
+    // 1. INIȚIALIZARE CMS
+    CMS.init({
+      config: {
+        backend: {
+          name: "github",
+          repo: "stefimihai27/instalari-windows-mioveni",
+          branch: "main",
+          auth_type: "token"
+        },
+        load_config_file: false,
+        display_url: "https://instalari-windows-mioveni.vercel.app",
+        collections: [
+          {
+            name: "setari",
+            label: "Setări Site",
+            files: [
+              {
+                name: "home",
+                label: "Pagina Principală",
+                file: "index.html",
+                fields: [
+                  { label: "Titlu Hero", name: "hero_title", widget: "string" },
+                  { label: "Telefon", name: "phone", widget: "string" },
+                  { label: "Pret Basic", name: "price_basic", widget: "string" },
+                  { label: "Pret Complet", name: "price_complet", widget: "string" }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    });
 
-    <div class="pt-20 min-h-screen">
-        <!-- Loader pentru autentificare -->
-        <div id="loading-screen" class="fixed inset-0 bg-background-light dark:bg-background-dark flex items-center justify-center z-50">
-            <div class="text-center">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-                <p>Verificare acces...</p>
-            </div>
-        </div>
-
-        <!-- Conținut Admin (ascuns inițial) -->
-        <div id="admin-content" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="text-center mb-16">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-blue-700 bg-clip-text text-transparent">
-                    Panou Administrare
-                </h1>
-                <div class="w-24 h-1.5 bg-primary mx-auto rounded-full"></div>
-            </div>
-
-            <div class="grid lg:grid-cols-2 gap-8">
-                <!-- Editare Prețuri -->
-                <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-8">
-                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
-                        <span class="material-icons text-primary">monetization_on</span>
-                        Prețuri Servicii
-                    </h3>
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Pachet Basic</label>
-                            <input id="price-basic" type="number" class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 focus:ring-2 focus:ring-primary" placeholder="100"/>
-                            <button onclick="savePrice('basic')" class="mt-2 px-6 py-2 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-all">
-                                Salvează
-                            </button>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Pachet Complet</label>
-                            <input id="price-complet" type="number" class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 focus:ring-2 focus:ring-primary" placeholder="180"/>
-                            <button onclick="savePrice('complet')" class="mt-2 px-6 py-2 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-all">
-                                Salvează
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Telefon Contact -->
-                <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-8">
-                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
-                        <span class="material-icons text-primary">phone</span>
-                        Număr Telefon
-                    </h3>
-                    <div class="space-y-4">
-                        <input id="admin-phone" type="tel" class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 focus:ring-2 focus:ring-primary" placeholder="07xx xxx xxx"/>
-                        <button onclick="savePhone()" class="w-full px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition-all">
-                            Actualizează Telefon
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mesaje Contact (în curs de dezvoltare) -->
-            <div class="mt-12 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-8">
-                <h3 class="text-2xl font-bold mb-6">📧 Mesaje Contact</h3>
-                <p class="text-slate-500 italic">Funcționalitate în dezvoltare...</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript Admin -->
-    <script>
-        // Config Netlify Identity (deja inclus în site)
-        if (window.netlifyIdentity) {
-            netlifyIdentity.on('init', user => {
-                if (!user) {
-                    // Utilizator negăsitor - redirect la login
-                    window.location.href = '/';
-                } else {
-                    // Utilizator autentificat - arată conținutul
-                    document.getElementById('loading-screen').classList.add('hidden');
-                    document.getElementById('admin-content').classList.remove('hidden');
-                    document.getElementById('admin-link')?.classList.remove('hidden');
-                    document.getElementById('logout-btn').classList.remove('hidden');
-                    
-                    // Încarcă datele salvate
-                    loadAdminData();
-                }
-            });
-
-            netlifyIdentity.on('logout', () => {
+    // 2. LOGICA DE NETLIFY IDENTITY
+    if (window.netlifyIdentity) {
+        netlifyIdentity.on('init', user => {
+            if (!user) {
                 window.location.href = '/';
-            });
-        }
-
-        // Funcții salvări (folosesc localStorage pentru demo)
-        function savePrice(type) {
-            const value = document.getElementById(`price-${type}`).value;
-            localStorage.setItem(`price_${type}`, value);
-            alert('Preț salvat!');
-            // Aici ai putea integra Netlify CMS sau alt backend
-        }
-
-        function savePhone() {
-            const phone = document.getElementById('admin-phone').value;
-            localStorage.setItem('admin_phone', phone);
-            alert('Telefon actualizat!');
-        }
-
-        function loadAdminData() {
-            document.getElementById('price-basic').value = localStorage.getItem('price_basic') || '100';
-            document.getElementById('price-complet').value = localStorage.getItem('price_complet') || '180';
-            document.getElementById('admin-phone').value = localStorage.getItem('admin_phone') || '07xx xxx xxx';
-        }
-
-        // Logout
-        document.getElementById('logout-btn').addEventListener('click', () => {
-            netlifyIdentity.logout();
+            } else {
+                document.getElementById('loading-screen').classList.add('hidden');
+                document.getElementById('admin-content').classList.remove('hidden');
+                document.getElementById('logout-btn').classList.remove('hidden');
+                // Sincronizăm datele din GitHub cu câmpurile tale la încărcare
+                setTimeout(loadAdminDataFromCMS, 2000); 
+            }
         });
-    </script>
-</body>
-</html>
+    }
+
+    // 3. FUNCȚII DE SALVARE CORECtate
+    // Această funcție face legătura între input-ul tău și motorul de salvare GitHub
+    function syncAndSave(fieldName, value) {
+        // Notificăm CMS-ul că am schimbat o valoare
+        window.CMS.getEditor().setFieldValue(fieldName, value);
+        alert(`Valoarea pentru ${fieldName} a fost pregătită. Apasă butonul "Publish" din bara Decap pentru a finaliza salvarea pe site.`);
+    }
+
+    function savePrice(type) {
+        const value = document.getElementById(`price-${type}`).value;
+        const fieldMap = type === 'basic' ? 'price_basic' : 'price_complet';
+        syncAndSave(fieldMap, value);
+    }
+
+    function savePhone() {
+        const phone = document.getElementById('admin-phone').value;
+        syncAndSave('phone', phone);
+    }
+
+    // Această funcție ia prețurile reale din fișierul index.html și le pune în input-urile tale
+    function loadAdminDataFromCMS() {
+        try {
+            const entry = window.CMS.getEntry('setari', 'home');
+            if (entry) {
+                const data = entry.get('data').toJS();
+                if(data.price_basic) document.getElementById('price-basic').value = data.price_basic;
+                if(data.price_complet) document.getElementById('price-complet').value = data.price_complet;
+                if(data.phone) document.getElementById('admin-phone').value = data.phone;
+            }
+        } catch (e) {
+            console.log("Se încarcă motorul CMS...");
+        }
+    }
+</script>
