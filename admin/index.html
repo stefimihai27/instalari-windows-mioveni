@@ -8,50 +8,53 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <script>
-        // --- 1. PAROLA SIMPLĂ ---
-        const user = prompt("Utilizator:");
-        const pass = prompt("Parolă:");
+        // --- 1. LOGIN SIMPLU (User & Parolă) ---
+        const uCorect = "admin";
+        const pCorecta = "admin2026";
+        
+        const uInput = prompt("Utilizator:");
+        const pInput = prompt("Parolă:");
 
-        if (user !== "admin" || pass !== "admin2026") {
-            alert("Acces interzis!");
+        if (uInput !== uCorect || pInput !== pCorecta) {
+            alert("Acces respins!");
             window.location.href = "/";
         }
     </script>
 </head>
-<body class="bg-slate-50 font-sans antialiased">
+<body class="bg-slate-100 font-sans">
 
-    <div id="admin-content" class="max-w-7xl mx-auto px-4 py-12">
-        <div class="text-center mb-16">
-            <h1 class="text-4xl font-bold text-slate-900 mb-4 tracking-tight">Panou Administrare</h1>
-            <div class="w-24 h-1.5 bg-blue-600 mx-auto rounded-full"></div>
+    <div id="admin-ui" class="max-w-6xl mx-auto px-4 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl font-bold text-slate-800 mb-2">Panou Control</h1>
+            <div class="w-20 h-1 bg-blue-600 mx-auto rounded-full"></div>
         </div>
 
-        <div class="grid lg:grid-cols-2 gap-8">
-            <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-                <h3 class="text-2xl font-bold mb-6 flex items-center gap-3 text-blue-600">
-                    <span class="material-icons">monetization_on</span> Prețuri Servicii
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-blue-700">
+                    <span class="material-icons">payments</span> Prețuri Servicii
                 </h3>
                 <div class="space-y-6">
                     <div>
-                        <label class="block text-xs font-bold mb-2 uppercase text-slate-400 tracking-widest">Pachet Basic (RON)</label>
-                        <input id="price-basic" type="number" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-blue-500 outline-none transition-all">
-                        <button onclick="saveToGitHub('price_basic', 'price-basic')" class="mt-4 px-8 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-all shadow-md">Salvează</button>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Pachet Basic (RON)</label>
+                        <input id="in-basic" type="number" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none">
+                        <button onclick="handleSave('price_basic', 'in-basic')" class="mt-3 px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-all">Salvează</button>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold mb-2 uppercase text-slate-400 tracking-widest">Pachet Complet (RON)</label>
-                        <input id="price-complet" type="number" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-blue-500 outline-none transition-all">
-                        <button onclick="saveToGitHub('price_complet', 'price-complet')" class="mt-4 px-8 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-all shadow-md">Salvează</button>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Pachet Complet (RON)</label>
+                        <input id="in-complet" type="number" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none">
+                        <button onclick="handleSave('price_complet', 'in-complet')" class="mt-3 px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-all">Salvează</button>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-                <h3 class="text-2xl font-bold mb-6 flex items-center gap-3 text-emerald-600">
-                    <span class="material-icons">phone</span> Contact Rapid
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 text-center md:text-left">
+                <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-emerald-700">
+                    <span class="material-icons">contact_phone</span> Contact Rapid
                 </h3>
-                <label class="block text-xs font-bold mb-2 uppercase text-slate-400 tracking-widest">Număr Telefon</label>
-                <input id="admin-phone" type="tel" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-emerald-500 outline-none transition-all">
-                <button onclick="saveToGitHub('phone', 'admin-phone')" class="mt-4 w-full px-8 py-3 bg-emerald-500 text-white font-bold rounded-lg hover:bg-emerald-600 transition-all shadow-md uppercase tracking-widest">Actualizează Telefon</button>
+                <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Număr Telefon</label>
+                <input id="in-phone" type="tel" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-600 outline-none mb-4">
+                <button onclick="handleSave('phone', 'in-phone')" class="w-full py-3 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 transition-all uppercase tracking-widest">Actualizează Telefon</button>
             </div>
         </div>
     </div>
@@ -64,7 +67,7 @@
                     name: "github",
                     repo: "stefimihai27/instalari-windows-mioveni",
                     branch: "main",
-                    auth_type: "token" 
+                    auth_type: "token"
                 },
                 load_config_file: false,
                 display_url: "https://instalari-windows-mioveni.netlify.app",
@@ -83,13 +86,16 @@
             }
         });
 
-        function saveToGitHub(fieldName, inputId) {
+        // Funcția de legătură
+        function handleSave(field, inputId) {
             const val = document.getElementById(inputId).value;
             try {
-                window.CMS.getEditor().setFieldValue(fieldName, val);
-                alert("Modificarea a fost pregătită! Acum apasă butonul 'Publish' care a apărut în panoul de control pentru a trimite prețul pe site.");
+                // Trimite valoarea în motorul CMS
+                window.CMS.getEditor().setFieldValue(field, val);
+                alert("Gata! Acum apasă butonul albastru 'Publish' care a apărut în bara de sus pentru a trimite prețul live pe site.");
             } catch (e) {
-                alert("Eroare: Trebuie să fii logat în widget-ul GitHub pentru a salva.");
+                // Această eroare apare dacă nu ai pus încă Token-ul în widget-ul de login
+                alert("Eroare: Trebuie să apeși mai întâi butonul 'Login with GitHub' și să pui codul (Token-ul).");
             }
         }
     </script>
