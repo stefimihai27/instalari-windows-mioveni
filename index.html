@@ -48,11 +48,15 @@
                     <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#servicii">Servicii</a>
                     <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#preturi">Prețuri</a>
                     <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#contact">Contact</a>
+                    <a id="admin-link" class="text-sm font-semibold text-orange-600 bg-orange-50 px-3 py-1 rounded-full hover:bg-orange-100 hidden transition-all" href="/admin/">
+                        <span class="material-icons-outlined text-xs mr-1">admin_panel_settings</span>
+                        Admin
+                    </a>
                 </div>
                 <div class="hidden md:block">
-                    <a class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 text-primary font-bold hover:bg-primary/20 transition-all" href="tel:0700000000">
+                    <a id="phone-link" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 text-primary font-bold hover:bg-primary/20 transition-all" href="tel:0700000000">
                         <span class="material-icons text-sm">phone</span>
-                        <span data-cms-field="phone">07xx xxx xxx</span>
+                        <span id="dynamic-phone" data-cms-field="phone">07xx xxx xxx</span>
                     </a>
                 </div>
             </div>
@@ -73,8 +77,8 @@
                     </span>
                     Servicii Disponibile în Mioveni
                 </div>
-                <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white leading-tight mb-6" data-cms-field="hero_title">
-                    Instalări Windows <span class="text-primary">┃</span> Mioveni
+                <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white leading-tight mb-6">
+                    <span data-cms-field="hero_title">Instalări Windows ┃ Mioveni</span>
                 </h1>
                 <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed mb-10 max-w-2xl">
                     Servicii profesionale de instalare sisteme de operare, actualizare drivere și optimizare software pentru performanță maximă.
@@ -138,7 +142,9 @@
             <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-8 flex flex-col hover:shadow-md transition-all">
                     <h3 class="text-xl font-bold mb-2">Pachet Basic</h3>
-                    <div class="text-4xl font-bold my-6" data-cms-field="price_basic">100 RON</div>
+                    <div class="text-4xl font-bold my-6">
+                        <span data-cms-field="price_basic">100</span> RON
+                    </div>
                     <ul class="space-y-4 mb-10 flex-grow">
                         <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Instalare Windows (10/11)</span></li>
                         <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Drivere de bază</span></li>
@@ -148,7 +154,9 @@
                 <div class="bg-white dark:bg-slate-800 rounded-xl border-2 border-primary p-8 flex flex-col relative transform scale-105 shadow-xl">
                     <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white px-4 py-1 rounded-full text-xs font-bold uppercase">Recomandat</div>
                     <h3 class="text-xl font-bold mb-2">Pachet Complet</h3>
-                    <div class="text-4xl font-bold my-6" data-cms-field="price_complet">180 RON</div>
+                    <div class="text-4xl font-bold my-6">
+                        <span data-cms-field="price_complet">180</span> RON
+                    </div>
                     <ul class="space-y-4 mb-10 flex-grow">
                         <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Windows + Optimizare</span></li>
                         <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Backup date & Office</span></li>
@@ -159,47 +167,17 @@
         </div>
     </section>
 
-    <section id="contact" class="py-20 bg-slate-50 dark:bg-slate-900/50">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="grid lg:grid-cols-2 gap-12">
-                <div>
-                    <h2 class="text-3xl font-bold mb-6">Contactează-ne</h2>
-                    <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                        <form class="space-y-4">
-                            <input class="w-full px-4 py-2 rounded border border-slate-300 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-primary" placeholder="Nume" type="text"/>
-                            <input class="w-full px-4 py-2 rounded border border-slate-300 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-primary" placeholder="Telefon" type="tel"/>
-                            <textarea class="w-full px-4 py-2 rounded border border-slate-300 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-primary" placeholder="Mesaj" rows="4"></textarea>
-                            <button class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-all">Trimite Mesaj</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="space-y-8">
-                    <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                        <h3 class="font-bold mb-4 flex items-center gap-2"><span class="material-icons text-primary">schedule</span>Program</h3>
-                        <p class="flex justify-between border-b pb-2"><span>Luni - Vineri</span><b>09:00 - 18:00</b></p>
-                        <p class="flex justify-between pt-2"><span>Sâmbătă</span><b>10:00 - 14:00</b></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-8">
-        <div class="max-w-6xl mx-auto px-4 text-center text-sm text-slate-500">
-            <p>© 2024 Service IT Mioveni. Toate drepturile rezervate.</p>
-        </div>
-    </footer>
-
     <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
+        if (window.netlifyIdentity) {
+            netlifyIdentity.on('init', user => {
+                if (user) {
+                    document.getElementById('admin-link').classList.remove('hidden');
+                }
             });
-          }
-        });
-      }
+            netlifyIdentity.on('login', () => {
+                document.getElementById('admin-link').classList.remove('hidden');
+            });
+        }
     </script>
 </body>
 </html>
