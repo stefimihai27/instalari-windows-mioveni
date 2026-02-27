@@ -167,7 +167,7 @@
                     SALVEAZĂ TOATE MODIFICĂRILE
                 </span>
             </button>
-            <p class="text-sm text-slate-500 mt-4">⚠️ Datele se salvează în localStorage și se copiază în clipboard</p>
+            <p class="text-sm text-slate-500 mt-4">⚠️ Datele se salvează în localStorage</p>
         </div>
 
         <!-- Mesaje -->
@@ -177,6 +177,7 @@
     <script>
         // ===== FUNCȚII TAB-URI =====
         function showTab(tabName) {
+            // Ascunde toate tab-urile
             document.getElementById('tab-preturi-content').classList.add('hidden');
             document.getElementById('tab-contact-content').classList.add('hidden');
             document.getElementById('tab-program-content').classList.add('hidden');
@@ -184,8 +185,10 @@
             document.getElementById('tab-servicii-content').classList.add('hidden');
             document.getElementById('tab-imagini-content').classList.add('hidden');
             
+            // Arată tab-ul selectat
             document.getElementById(`tab-${tabName}-content`).classList.remove('hidden');
             
+            // Actualizează butoanele
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('bg-blue-600', 'text-white');
                 btn.classList.add('bg-white', 'text-slate-700');
@@ -195,6 +198,7 @@
 
         // ===== SALVARE DATE =====
         function saveAllChanges() {
+            // Colectează toate datele
             const newData = {
                 hero_title: document.getElementById('hero_title').value,
                 hero_subtitle: document.getElementById('hero_subtitle').value,
