@@ -177,6 +177,7 @@
     <script>
         // ===== FUNCȚII TAB-URI =====
         function showTab(tabName) {
+            // Ascunde toate tab-urile
             document.getElementById('tab-preturi-content').classList.add('hidden');
             document.getElementById('tab-contact-content').classList.add('hidden');
             document.getElementById('tab-program-content').classList.add('hidden');
@@ -184,8 +185,10 @@
             document.getElementById('tab-servicii-content').classList.add('hidden');
             document.getElementById('tab-imagini-content').classList.add('hidden');
             
+            // Arată tab-ul selectat
             document.getElementById(`tab-${tabName}-content`).classList.remove('hidden');
             
+            // Actualizează butoanele
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('bg-blue-600', 'text-white');
                 btn.classList.add('bg-white', 'text-slate-700');
@@ -195,13 +198,204 @@
 
         // ===== SALVARE DATE =====
         function saveAllChanges() {
+            // Colectează toate datele
             const newData = {
+                // Text
                 hero_title: document.getElementById('hero_title').value,
                 hero_subtitle: document.getElementById('hero_subtitle').value,
+                
+                // Contact
                 phone: document.getElementById('phone').value,
                 address: document.getElementById('address').value,
+                
+                // Program
                 program_week: document.getElementById('program_week').value,
                 program_sat: document.getElementById('program_sat').value,
+                
+                // Prețuri
                 price_basic: document.getElementById('price_basic').value,
                 price_complet: document.getElementById('price_complet').value,
-                service1_desc: document
+                
+                // Servicii
+                service1_desc: document.getElementById('service1_desc').value,
+                service2_desc: document.getElementById('service2_desc').value,
+                service3_desc: document.getElementById('service3_desc').value,
+                service4_desc: document.getElementById('service4_desc').value,
+                
+                // Imagini
+                header_image: document.getElementById('header_image').value
+            };
+
+            // Salvare în localStorage
+            localStorage.setItem('siteData', JSON.stringify(newData));
+            
+            // Generează codul pentru index.html
+            const codHtml = generateHtmlCode(newData);
+            
+            // Afișează mesaj
+            showMessage('✅ Date salvate cu succes!', 'green');
+            
+            // Afișează codul în consolă
+            console.log('%c🔴 COPY THIS CODE AND PASTE IN index.html (before </body>):', 'font-size: 16px; font-weight: bold; color: red;');
+            console.log(codHtml);
+            
+            // Copiază automat în clipboard
+            navigator.clipboard.writeText(codHtml).then(() => {
+                showMessage('📋 Cod copiat în clipboard!', 'blue');
+            }).catch(() => {
+                alert('✅ Date salvate! Deschide consola (F12) și copiază codul afișat acolo.');
+            });
+        }
+
+        // ===== GENERARE COD =====
+        function generateHtmlCode(data) {
+            return `<!-- DATE DIN ADMIN - Actualizat la ${new Date().toLocaleString()} -->
+<script>
+    // Date din panoul de administrare
+    const siteData = {
+        hero_title: "${data.hero_title.replace(/"/g, '\\"')}",
+        hero_subtitle: "${data.hero_subtitle.replace(/"/g, '\\"').replace(/\n/g, '\\n')}",
+        phone: "${data.phone}",
+        address: "${data.address}",
+        program_week: "${data.program_week}",
+        program_sat: "${data.program_sat}",
+        price_basic: "${data.price_basic}",
+        price_complet: "${data.price_complet}",
+        service1_desc: "${data.service1_desc.replace(/"/g, '\\"')}",
+        service2_desc: "${data.service2_desc.replace(/"/g, '\\"')}",
+        service3_desc: "${data.service3_desc.replace(/"/g, '\\"')}",
+        service4_desc: "${data.service4_desc.replace(/"/g, '\\"')}",
+        header_image: "${data.header_image}"
+    };
+
+    // Aplică datele pe site
+    document.addEventListener('DOMContentLoaded', function() {
+        if (document.getElementById('hero-title')) 
+            document.getElementById('hero-title').innerHTML = siteData.hero_title;
+        if (document.getElementById('hero-subtitle')) 
+            document.getElementById('hero-subtitle').textContent = siteData.hero_subtitle;
+        if (document.getElementById('phone-text')) {
+            document.getElementById('phone-text').textContent = siteData.phone;
+            document.getElementById('phone-link').href = 'tel:' + siteData.phone.replace(/\\s/g, '');
+            document.getElementById('footer-phone').textContent = siteData.phone;
+            document.getElementById('footer-phone').href = 'tel:' + siteData.phone.replace(/\\s/g, '');
+        }
+        if (document.getElementById('address')) 
+            document.getElementById('address').textContent = siteData.address;
+        if (document.getElementById('program-week')) 
+            document.getElementById('program-week').textContent = siteData.program_week;
+        if (document.getElementById('program-sat')) 
+            document.getElementById('program-sat').textContent = siteData.program_sat;
+        if (document.getElementById('price-basic')) 
+            document.getElementById('price-basic').textContent = siteData.price_basic;
+        if (document.getElementById('price-complet')) 
+            document.getElementById('price-complet').textContent = siteData.price_complet;
+        if (document.getElementById('service1-desc')) 
+            document.getElementById('service1-desc').textContent = siteData.service1_desc;
+        if (document.getElementById('service2-desc')) 
+            document.getElementById('service2-desc').textContent = siteData.service2_desc;
+        if (document.getElementById('service3-desc')) 
+            document.getElementById('service3-desc').textContent = siteData.service3_desc;
+        if (document.getElementById('service4-desc')) 
+            document.getElementById('service4-desc').textContent = siteData.service4_desc;
+        if (document.getElementById('header-image')) 
+            document.getElementById('header-image').src = siteData.header_image;
+    });
+</script>`;
+        }
+
+        // ===== AFIȘARE MESAJ =====
+        function showMessage(text, color) {
+            const container = document.getElementById('message-container');
+            const msg = document.createElement('div');
+            msg.className = `bg-${color}-500 text-white px-6 py-4 rounded-lg shadow-lg mb-2 success-message flex items-center gap-2`;
+            msg.innerHTML = `<span class="material-icons">${color === 'green' ? 'check_circle' : color === 'blue' ? 'content_copy' : 'info'}</span> ${text}`;
+            container.appendChild(msg);
+            
+            setTimeout(() => {
+                msg.remove();
+            }, 3000);
+        }
+
+        // ===== PREVIZUALIZARE IMAGINI =====
+        document.getElementById('header_image').addEventListener('input', function() {
+            if (this.value) {
+                document.getElementById('header-preview').innerHTML = `<img src="${this.value}" class="preview-image">`;
+            }
+        });
+
+        // ===== ÎNCĂRCARE DATE SALVATE =====
+        function loadSavedData() {
+            const saved = localStorage.getItem('siteData');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    
+                    // Text
+                    document.getElementById('hero_title').value = data.hero_title || 'Instalări Windows ┃ Mioveni';
+                    document.getElementById('hero_subtitle').value = data.hero_subtitle || 'Servicii profesionale...';
+                    
+                    // Contact
+                    document.getElementById('phone').value = data.phone || '0748 123 456';
+                    document.getElementById('address').value = data.address || 'Strada Principală, Mioveni';
+                    
+                    // Program
+                    document.getElementById('program_week').value = data.program_week || '09:00 - 18:00';
+                    document.getElementById('program_sat').value = data.program_sat || '10:00 - 14:00';
+                    
+                    // Prețuri
+                    document.getElementById('price_basic').value = data.price_basic || '100 RON';
+                    document.getElementById('price_complet').value = data.price_complet || '180 RON';
+                    
+                    // Servicii
+                    document.getElementById('service1_desc').value = data.service1_desc || 'Instalare profesională pentru Windows 10 și 11, activare licență și configurări inițiale.';
+                    document.getElementById('service2_desc').value = data.service2_desc || 'Curățare software, eliminare fișiere temporare și optimizare startup.';
+                    document.getElementById('service3_desc').value = data.service3_desc || 'Instalare drivere compatibile, suită Office și browsere.';
+                    document.getElementById('service4_desc').value = data.service4_desc || 'Recuperare profesională a fișierelor pierdute sau șterse accidental.';
+                    
+                    // Imagini
+                    document.getElementById('header_image').value = data.header_image || 'https://images.unsplash.com/photo-1588702547919-26089e690eca?auto=format&fit=crop&q=80&w=2070';
+                    
+                    showMessage('✅ Date încărcate din salvare', 'green');
+                } catch (e) {
+                    console.log('Eroare la încărcare');
+                }
+            }
+        }
+
+        // ===== LA ÎNCĂRCARE =====
+        window.onload = function() {
+            loadSavedData();
+            showTab('preturi');
+            
+            // Previzualizare inițială imagine
+            setTimeout(() => {
+                if (document.getElementById('header_image').value) {
+                    document.getElementById('header-preview').innerHTML = `<img src="${document.getElementById('header_image').value}" class="preview-image">`;
+                }
+            }, 500);
+        };
+    </script>
+
+    <!-- Instrucțiuni -->
+    <div class="max-w-6xl mx-auto px-4 mt-8">
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 text-sm text-blue-800">
+            <h4 class="font-bold mb-2 flex items-center gap-2">
+                <span class="material-icons text-blue-600">info</span>
+                Instrucțiuni:
+            </h4>
+            <ol class="list-decimal ml-8 space-y-1">
+                <li><span class="font-semibold">Modifică</span> ce ai nevoie în fiecare tab</li>
+                <li><span class="font-semibold">Apasă "SALVEAZĂ"</span> - datele se salvează în browser</li>
+                <li><span class="font-semibold">Deschide consola (F12)</span> și vei vedea codul generat</li>
+                <li><span class="font-semibold">Copiază codul</span> din consolă (se copiază automat în clipboard)</li>
+                <li><span class="font-semibold">Deschide index.html</span> și înlocuiește secțiunea "DATE IMPLICITE" cu codul nou</li>
+                <li><span class="font-semibold">Încarcă</span> noul index.html pe server</li>
+            </ol>
+            <p class="mt-4 bg-yellow-100 text-yellow-800 p-3 rounded-lg">
+                <span class="font-bold">✅ Acum poți modifica:</span> Prețuri, Telefon, Adresă, Program, Titlu, Subtitlu, Descrieri Servicii, Imagine Header
+            </p>
+        </div>
+    </div>
+</body>
+</html>
