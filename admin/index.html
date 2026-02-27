@@ -7,9 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        .save-btn { transition: all 0.3s; }
-        .save-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.5); }
-        .success-message { animation: fadeOut 3s forwards; }
+        .success { animation: fadeOut 3s forwards; }
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; } }
     </style>
 </head>
@@ -24,12 +22,12 @@
         const parola = prompt("🔐 Parolă:");
         
         if (utilizator !== utilizatorCorect || parola !== parolaCorecta) { 
-            alert("❌ Acces respins! Vei fi redirecționat.");
+            alert("❌ Acces respins!");
             window.location.href = "/"; 
         }
     </script>
 
-    <div id="admin-ui" class="max-w-6xl mx-auto px-4 py-12">
+    <div class="max-w-6xl mx-auto px-4 py-12">
         <!-- Header -->
         <div class="text-center mb-12">
             <div class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-full mb-4">
@@ -52,24 +50,12 @@
                     <!-- Pachet Basic -->
                     <div>
                         <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Pachet Basic (RON)</label>
-                        <input id="in-basic" type="number" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none" placeholder="ex: 100">
-                        <button onclick="saveToCMS('price_basic', document.getElementById('in-basic').value + ' RON')" class="mt-3 px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-all save-btn">
-                            <span class="flex items-center gap-2">
-                                <span class="material-icons text-sm">save</span>
-                                Salvează Basic
-                            </span>
-                        </button>
+                        <input id="price_basic" type="number" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none" placeholder="ex: 100">
                     </div>
                     <!-- Pachet Complet -->
                     <div>
                         <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Pachet Complet (RON)</label>
-                        <input id="in-complet" type="number" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none" placeholder="ex: 180">
-                        <button onclick="saveToCMS('price_complet', document.getElementById('in-complet').value + ' RON')" class="mt-3 px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-all save-btn">
-                            <span class="flex items-center gap-2">
-                                <span class="material-icons text-sm">save</span>
-                                Salvează Complet
-                            </span>
-                        </button>
+                        <input id="price_complet" type="number" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none" placeholder="ex: 180">
                     </div>
                 </div>
             </div>
@@ -77,31 +63,19 @@
             <!-- Coloana 2: Contact -->
             <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
                 <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-emerald-700">
-                    <span class="material-icons">contact_phone</span> Contact Rapid
+                    <span class="material-icons">contact_phone</span> Contact
                 </h3>
                 <div class="space-y-6">
                     <!-- Telefon -->
                     <div>
                         <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Număr Telefon</label>
-                        <input id="in-phone" type="tel" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-600 outline-none" placeholder="ex: 0748 123 456">
-                        <button onclick="saveToCMS('phone', document.getElementById('in-phone').value)" class="mt-3 w-full py-3 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 transition-all uppercase tracking-widest save-btn">
-                            <span class="flex items-center justify-center gap-2">
-                                <span class="material-icons text-sm">phone</span>
-                                Actualizează Telefon
-                            </span>
-                        </button>
+                        <input id="phone" type="tel" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-600 outline-none" placeholder="ex: 0748 123 456">
                     </div>
                     
-                    <!-- Adresă (câmp nou) -->
-                    <div class="pt-4 border-t border-slate-100">
+                    <!-- Adresă -->
+                    <div>
                         <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Adresă</label>
-                        <input id="in-address" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-600 outline-none" placeholder="ex: Strada Principală, Mioveni">
-                        <button onclick="saveToCMS('address', document.getElementById('in-address').value)" class="mt-3 w-full py-3 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 transition-all">
-                            <span class="flex items-center justify-center gap-2">
-                                <span class="material-icons text-sm">location_on</span>
-                                Actualizează Adresă
-                            </span>
-                        </button>
+                        <input id="address" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-600 outline-none" placeholder="ex: Strada Principală, Mioveni">
                     </div>
                 </div>
             </div>
@@ -115,192 +89,163 @@
                     <!-- Titlu Hero -->
                     <div>
                         <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Titlu Principal</label>
-                        <input id="in-hero-title" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-purple-600 outline-none" placeholder="Instalări Windows ┃ Mioveni">
-                        <button onclick="saveToCMS('hero_title', document.getElementById('in-hero-title').value)" class="mt-3 px-6 py-2 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700 transition-all">
-                            <span class="flex items-center gap-2">
-                                <span class="material-icons text-sm">title</span>
-                                Salvează Titlu
-                            </span>
-                        </button>
+                        <input id="hero_title" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-purple-600 outline-none" placeholder="Instalări Windows ┃ Mioveni">
                     </div>
                     <!-- Subtitlu -->
                     <div>
                         <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Subtitlu</label>
-                        <textarea id="in-hero-subtitle" rows="3" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-purple-600 outline-none" placeholder="Descrierea principală..."></textarea>
-                        <button onclick="saveToCMS('hero_subtitle', document.getElementById('in-hero-subtitle').value)" class="mt-3 px-6 py-2 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700 transition-all">
-                            <span class="flex items-center gap-2">
-                                <span class="material-icons text-sm">description</span>
-                                Salvează Subtitlu
-                            </span>
-                        </button>
+                        <textarea id="hero_subtitle" rows="3" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-purple-600 outline-none" placeholder="Descrierea principală..."></textarea>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Status și mesaje -->
-        <div id="message-container" class="fixed bottom-4 right-4"></div>
-        
-        <!-- Buton Publicare -->
+        <!-- Buton Salvare -->
         <div class="mt-8 text-center">
-            <button onclick="publishChanges()" class="px-12 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all text-lg">
+            <button onclick="saveAllChanges()" class="px-12 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all text-lg">
                 <span class="flex items-center justify-center gap-3">
-                    <span class="material-icons">publish</span>
-                    PUBLICĂ TOATE MODIFICĂRILE PE SITE
+                    <span class="material-icons">save</span>
+                    SALVEAZĂ TOATE MODIFICĂRILE
                 </span>
             </button>
-            <p class="text-sm text-slate-500 mt-4">⚠️ După ce ai făcut toate modificările, apasă butonul de mai sus</p>
+            <p class="text-sm text-slate-500 mt-4">⚠️ Modificările se salvează în acest browser</p>
         </div>
+
+        <!-- Status -->
+        <div id="message" class="fixed bottom-4 right-4"></div>
     </div>
 
-    <!-- CMS Script -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    
     <script>
-        // ===== CONFIGURARE CMS =====
-        CMS.init({
-            config: {
-                backend: {
-                    name: "github",
-                    repo: "stefimihai27/instalari-windows-mioveni",
-                    branch: "main",
-                    auth_type: "token" // Folosește Personal Access Token
-                },
-                load_config_file: false,
-                display_url: "https://instalari-windows-mioveni.netlify.app",
-                collections: [{
-                    name: "setari",
-                    label: "Setări Site",
-                    files: [{
-                        name: "home",
-                        label: "Pagina Principală",
-                        file: "index.html",
-                        fields: [
-                            { label: "Titlu Principal", name: "hero_title", widget: "string" },
-                            { label: "Subtitlu", name: "hero_subtitle", widget: "text" },
-                            { label: "Telefon", name: "phone", widget: "string" },
-                            { label: "Adresă", name: "address", widget: "string" },
-                            { label: "Preț Basic", name: "price_basic", widget: "string" },
-                            { label: "Preț Complet", name: "price_complet", widget: "string" }
-                        ]
-                    }]
-                }]
-            }
-        });
-
-        // ===== FUNCȚII AJUTĂTOARE =====
-        let cmsEntry = null;
-        let cmsEditor = null;
-
-        // Încărcare date existente
-        setTimeout(() => {
-            try {
-                // Încearcă să preia datele din CMS
-                console.log("Încerc să încarc datele existente...");
-                
-                // Setează valori implicite după 3 secunde dacă nu s-au încărcat
-                setTimeout(() => {
-                    if (!document.getElementById('in-basic').value) {
-                        document.getElementById('in-basic').value = "100";
-                        document.getElementById('in-complet').value = "180";
-                        document.getElementById('in-phone').value = "0748 123 456";
-                        document.getElementById('in-address').value = "Strada Principală, Mioveni";
-                        document.getElementById('in-hero-title').value = "Instalări Windows ┃ Mioveni";
-                        document.getElementById('in-hero-subtitle').value = "Servicii profesionale de instalare sisteme de operare, actualizare drivere și optimizare software pentru performanță maximă.";
-                    }
-                }, 2000);
-                
-            } catch (e) {
-                console.log("Eroare la încărcare date, se folosesc valorile implicite");
-            }
-        }, 1000);
-
-        // Salvare în CMS
-        function saveToCMS(field, value) {
-            try {
-                // Arată un mesaj de încărcare
-                showMessage("Se salvează...", "blue");
-                
-                // Salvare efectivă
-                setTimeout(() => {
-                    showMessage(`✅ ${field} a fost salvat local! Acum apasă PUBLICĂ.`, "green");
-                }, 500);
-                
-                // Aici poți salva și în localStorage pentru backup
-                localStorage.setItem(field, value);
-                
-            } catch (e) {
-                showMessage("❌ Eroare! Verifică token-ul GitHub.", "red");
-            }
-        }
-
-        // Publicare toate modificările
-        function publishChanges() {
-            // Colectează toate valorile
-            const data = {
-                hero_title: document.getElementById('in-hero-title').value,
-                hero_subtitle: document.getElementById('in-hero-subtitle').value,
-                phone: document.getElementById('in-phone').value,
-                address: document.getElementById('in-address').value,
-                price_basic: document.getElementById('in-basic').value + " RON",
-                price_complet: document.getElementById('in-complet').value + " RON"
-            };
-            
-            // Salvează în localStorage
-            localStorage.setItem('siteData', JSON.stringify(data));
-            
-            showMessage("📦 Date pregătite pentru publicare!", "green");
-            
-            // Deschide GitHub sau CMS
-            if (confirm("Datele au fost salvate local. Vrei să deschizi GitHub pentru a face commit?")) {
-                window.open("https://github.com/stefimihai27/instalari-windows-mioveni", "_blank");
-            }
-        }
-
-        // Afișare mesaj
-        function showMessage(text, color) {
-            const container = document.getElementById('message-container');
-            const msg = document.createElement('div');
-            msg.className = `bg-${color}-500 text-white px-6 py-3 rounded-lg shadow-lg mb-2 success-message`;
-            msg.innerHTML = text;
-            container.appendChild(msg);
-            
-            setTimeout(() => {
-                msg.remove();
-            }, 3000);
-        }
-
-        // Încărcare date din localStorage la pornire
-        (function loadFromLocal() {
+        // ===== ÎNCĂRCARE DATE SALVATE =====
+        function loadSavedData() {
             const saved = localStorage.getItem('siteData');
             if (saved) {
                 try {
                     const data = JSON.parse(saved);
-                    if (data.hero_title) document.getElementById('in-hero-title').value = data.hero_title;
-                    if (data.hero_subtitle) document.getElementById('in-hero-subtitle').value = data.hero_subtitle;
-                    if (data.phone) document.getElementById('in-phone').value = data.phone;
-                    if (data.address) document.getElementById('in-address').value = data.address;
-                    if (data.price_basic) document.getElementById('in-basic').value = data.price_basic.replace(' RON', '');
-                    if (data.price_complet) document.getElementById('in-complet').value = data.price_complet.replace(' RON', '');
-                } catch (e) {}
+                    document.getElementById('hero_title').value = data.hero_title || '';
+                    document.getElementById('hero_subtitle').value = data.hero_subtitle || '';
+                    document.getElementById('phone').value = data.phone || '';
+                    document.getElementById('address').value = data.address || '';
+                    document.getElementById('price_basic').value = data.price_basic || '';
+                    document.getElementById('price_complet').value = data.price_complet || '';
+                    
+                    showMessage('✅ Date încărcate din salvare', 'green');
+                } catch (e) {
+                    console.log('Eroare la încărcare');
+                }
+            } else {
+                // Valori implicite
+                document.getElementById('hero_title').value = 'Instalări Windows ┃ Mioveni';
+                document.getElementById('hero_subtitle').value = 'Servicii profesionale de instalare sisteme de operare, actualizare drivere și optimizare software pentru performanță maximă.';
+                document.getElementById('phone').value = '0748 123 456';
+                document.getElementById('address').value = 'Strada Principală, Mioveni';
+                document.getElementById('price_basic').value = '100';
+                document.getElementById('price_complet').value = '180';
             }
-        })();
+        }
+
+        // ===== SALVARE TOATE DATELE =====
+        function saveAllChanges() {
+            const data = {
+                hero_title: document.getElementById('hero_title').value,
+                hero_subtitle: document.getElementById('hero_subtitle').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                price_basic: document.getElementById('price_basic').value,
+                price_complet: document.getElementById('price_complet').value,
+                lastSaved: new Date().toLocaleString()
+            };
+            
+            // Salvare în localStorage
+            localStorage.setItem('siteData', JSON.stringify(data));
+            
+            // Afișează codul de inserat
+            const codHtml = generateHtmlCode(data);
+            
+            // Afișează mesaj și codul
+            showMessage('✅ Date salvate cu succes!', 'green');
+            
+            // Arată instrucțiuni
+            alert(`
+✅ DATE SALVATE LOCAL!
+
+Acum trebuie să:
+1. Deschizi fișierul index.html
+2. Cauți secțiunea cu "date implicite"
+3. Înlocuiești cu codul din consolă
+
+Apasă F12 și mergi la tab-ul "Console" pentru a vedea codul.
+            `);
+            
+            console.log('%c🔴 CODUL DE INSERAT ÎN index.html:', 'font-size: 16px; font-weight: bold; color: red;');
+            console.log(codHtml);
+        }
+
+        // ===== GENERARE COD PENTRU index.html =====
+        function generateHtmlCode(data) {
+            return `
+<script>
+    // DATE DIN ADMIN - Actualizat la ${new Date().toLocaleString()}
+    const siteData = {
+        hero_title: "${data.hero_title}",
+        hero_subtitle: "${data.hero_subtitle}",
+        phone: "${data.phone}",
+        address: "${data.address}",
+        price_basic: "${data.price_basic} RON",
+        price_complet: "${data.price_complet} RON"
+    };
+
+    // Aplică datele pe site
+    document.addEventListener('DOMContentLoaded', function() {
+        if (document.getElementById('hero-title')) 
+            document.getElementById('hero-title').innerHTML = siteData.hero_title;
+        if (document.getElementById('hero-subtitle')) 
+            document.getElementById('hero-subtitle').textContent = siteData.hero_subtitle;
+        if (document.getElementById('phone-text')) {
+            document.getElementById('phone-text').textContent = siteData.phone;
+            document.getElementById('phone-link').href = 'tel:' + siteData.phone.replace(/\\s/g, '');
+        }
+        if (document.getElementById('address')) 
+            document.getElementById('address').textContent = siteData.address;
+        if (document.getElementById('price-basic')) 
+            document.getElementById('price-basic').textContent = siteData.price_basic;
+        if (document.getElementById('price-complet')) 
+            document.getElementById('price-complet').textContent = siteData.price_complet;
+    });
+</script>`;
+        }
+
+        // ===== AFIȘARE MESAJ =====
+        function showMessage(text, color) {
+            const msgDiv = document.getElementById('message');
+            msgDiv.innerHTML = `<div class="bg-${color}-500 text-white px-6 py-3 rounded-lg shadow-lg success">${text}</div>`;
+            setTimeout(() => {
+                msgDiv.innerHTML = '';
+            }, 3000);
+        }
+
+        // ===== LA ÎNCĂRCARE =====
+        window.onload = loadSavedData;
     </script>
 
-    <!-- Instrucțiuni pentru client -->
+    <!-- Instrucțiuni -->
     <div class="max-w-6xl mx-auto px-4 mt-8">
         <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 text-sm text-blue-800">
             <h4 class="font-bold mb-2 flex items-center gap-2">
                 <span class="material-icons text-blue-600">info</span>
-                Instrucțiuni pentru publicare:
+                Instrucțiuni:
             </h4>
             <ol class="list-decimal ml-8 space-y-1">
                 <li>Modifică ce ai nevoie în câmpurile de mai sus</li>
-                <li>Apasă "PUBLICĂ TOATE MODIFICĂRILE"</li>
-                <li>Confirmă deschiderea GitHub</li>
-                <li>Pe GitHub, fă click pe "Commit changes"</li>
-                <li>Site-ul se actualizează automat în 1-2 minute</li>
+                <li>Apasă "SALVEAZĂ TOATE MODIFICĂRILE"</li>
+                <li>Deschide consola (F12) și copiază codul afișat</li>
+                <li>Deschide fișierul index.html și adaugă codul la sfârșit, înainte de <code>&lt;/body&gt;</code></li>
+                <li>Încarcă noul index.html pe server</li>
             </ol>
+            <p class="mt-4 text-yellow-700 bg-yellow-50 p-3 rounded-lg">
+                <span class="font-bold">⚠️ ATENȚIE:</span> Modificările se salvează DOAR în acest panou. 
+                Pentru a le vedea pe site, trebuie să copiezi codul din consolă în index.html.
+            </p>
         </div>
     </div>
 </body>
