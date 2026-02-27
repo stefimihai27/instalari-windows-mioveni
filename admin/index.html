@@ -7,8 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        .success { animation: fadeOut 3s forwards; }
+        .success-message { animation: slideIn 0.3s, fadeOut 3s forwards; }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; } }
+        .preview-image { max-width: 200px; max-height: 150px; object-fit: cover; border-radius: 8px; margin-top: 10px; border: 2px solid #195de6; }
+        .tab-active { background-color: #195de6 !important; color: white !important; }
     </style>
 </head>
 <body class="bg-slate-100 font-sans">
@@ -35,164 +38,234 @@
                 <span class="font-bold">ADMIN PANEL</span>
             </div>
             <h1 class="text-3xl font-bold text-slate-800 mb-2">Panou Control - Windows Mioveni</h1>
-            <p class="text-slate-500">Modifică prețuri, text și informații de contact</p>
+            <p class="text-slate-500">Modifică prețuri, text, contact, servicii și imagini</p>
             <div class="w-20 h-1 bg-blue-600 mx-auto rounded-full mt-4"></div>
         </div>
 
-        <!-- Grid cu 2 coloane -->
-        <div class="grid md:grid-cols-2 gap-8">
-            <!-- Coloana 1: Prețuri -->
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-                <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-blue-700">
-                    <span class="material-icons">payments</span> Prețuri Servicii
-                </h3>
-                <div class="space-y-6">
-                    <!-- Pachet Basic -->
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Pachet Basic (RON)</label>
-                        <input id="price_basic" type="number" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none" placeholder="ex: 100">
-                    </div>
-                    <!-- Pachet Complet -->
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Pachet Complet (RON)</label>
-                        <input id="price_complet" type="number" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none" placeholder="ex: 180">
-                    </div>
+        <!-- Tabs -->
+        <div class="flex flex-wrap gap-2 mb-6 bg-white p-2 rounded-xl shadow-sm">
+            <button onclick="showTab('preturi')" id="tab-preturi" class="tab-btn px-6 py-3 rounded-lg font-semibold bg-blue-600 text-white">💰 Prețuri</button>
+            <button onclick="showTab('contact')" id="tab-contact" class="tab-btn px-6 py-3 rounded-lg font-semibold">📞 Contact</button>
+            <button onclick="showTab('text')" id="tab-text" class="tab-btn px-6 py-3 rounded-lg font-semibold">📝 Text</button>
+            <button onclick="showTab('servicii')" id="tab-servicii" class="tab-btn px-6 py-3 rounded-lg font-semibold">⚙️ Servicii</button>
+            <button onclick="showTab('imagini')" id="tab-imagini" class="tab-btn px-6 py-3 rounded-lg font-semibold">🖼️ Imagini</button>
+            <button onclick="showTab('program')" id="tab-program" class="tab-btn px-6 py-3 rounded-lg font-semibold">⏰ Program</button>
+        </div>
+
+        <!-- Tab: Prețuri -->
+        <div id="tab-preturi-content" class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-6">
+            <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-blue-700">
+                <span class="material-icons">payments</span> Prețuri Servicii
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Pachet Basic</label>
+                    <input id="price_basic" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none" placeholder="ex: 100 RON" value="100 RON">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Pachet Complet</label>
+                    <input id="price_complet" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none" placeholder="ex: 180 RON" value="180 RON">
                 </div>
             </div>
+        </div>
 
-            <!-- Coloana 2: Contact -->
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-                <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-emerald-700">
-                    <span class="material-icons">contact_phone</span> Contact
-                </h3>
-                <div class="space-y-6">
-                    <!-- Telefon -->
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Număr Telefon</label>
-                        <input id="phone" type="tel" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-600 outline-none" placeholder="ex: 0748 123 456">
-                    </div>
-                    
-                    <!-- Adresă -->
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Adresă</label>
-                        <input id="address" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-600 outline-none" placeholder="ex: Strada Principală, Mioveni">
-                    </div>
+        <!-- Tab: Contact -->
+        <div id="tab-contact-content" class="hidden bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-6">
+            <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-emerald-700">
+                <span class="material-icons">contact_phone</span> Informații Contact
+            </h3>
+            <div class="grid gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Număr Telefon</label>
+                    <input id="phone" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-600 outline-none" placeholder="ex: 0748 123 456" value="0748 123 456">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Adresă</label>
+                    <input id="address" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-600 outline-none" placeholder="ex: Strada Principală, Mioveni" value="Strada Principală, Mioveni">
                 </div>
             </div>
+        </div>
 
-            <!-- Coloana 3: Text (ocupă toată lățimea) -->
-            <div class="md:col-span-2 bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-                <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-purple-700">
-                    <span class="material-icons">edit</span> Text Principal
-                </h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <!-- Titlu Hero -->
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Titlu Principal</label>
-                        <input id="hero_title" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-purple-600 outline-none" placeholder="Instalări Windows ┃ Mioveni">
-                    </div>
-                    <!-- Subtitlu -->
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Subtitlu</label>
-                        <textarea id="hero_subtitle" rows="3" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-purple-600 outline-none" placeholder="Descrierea principală..."></textarea>
-                    </div>
+        <!-- Tab: Program -->
+        <div id="tab-program-content" class="hidden bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-6">
+            <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-amber-700">
+                <span class="material-icons">schedule</span> Program de Lucru
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Luni - Vineri</label>
+                    <input id="program_week" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-amber-600 outline-none" placeholder="09:00 - 18:00" value="09:00 - 18:00">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Sâmbătă</label>
+                    <input id="program_sat" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-amber-600 outline-none" placeholder="10:00 - 14:00" value="10:00 - 14:00">
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Text -->
+        <div id="tab-text-content" class="hidden bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-6">
+            <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-purple-700">
+                <span class="material-icons">edit</span> Text Principal
+            </h3>
+            <div class="grid gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Titlu Principal</label>
+                    <input id="hero_title" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-purple-600 outline-none" placeholder="Instalări Windows ┃ Mioveni" value="Instalări Windows ┃ Mioveni">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Subtitlu</label>
+                    <textarea id="hero_subtitle" rows="3" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-purple-600 outline-none" placeholder="Descrierea principală...">Servicii profesionale de instalare sisteme de operare, actualizare drivere și optimizare software pentru performanță maximă.</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Servicii -->
+        <div id="tab-servicii-content" class="hidden bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-6">
+            <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-orange-700">
+                <span class="material-icons">build</span> Descrieri Servicii
+            </h3>
+            <div class="grid gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Serviciu 1 - Instalare Windows</label>
+                    <textarea id="service1_desc" rows="2" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-orange-600 outline-none">Instalare profesională pentru Windows 10 și 11, activare licență și configurări inițiale.</textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Serviciu 2 - Optimizare Sistem</label>
+                    <textarea id="service2_desc" rows="2" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-orange-600 outline-none">Curățare software, eliminare fișiere temporare și optimizare startup.</textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Serviciu 3 - Drivere & Programe</label>
+                    <textarea id="service3_desc" rows="2" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-orange-600 outline-none">Instalare drivere compatibile, suită Office și browsere.</textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Serviciu 4 - Recuperare Date</label>
+                    <textarea id="service4_desc" rows="2" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-orange-600 outline-none">Recuperare profesională a fișierelor pierdute sau șterse accidental.</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Imagini -->
+        <div id="tab-imagini-content" class="hidden bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-6">
+            <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-pink-700">
+                <span class="material-icons">image</span> Imagini
+            </h3>
+            <div class="grid gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">URL Imagine Header</label>
+                    <input id="header_image" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-pink-600 outline-none" value="https://images.unsplash.com/photo-1588702547919-26089e690eca?auto=format&fit=crop&q=80&w=2070">
+                    <div id="header-preview" class="mt-4"></div>
                 </div>
             </div>
         </div>
 
         <!-- Buton Salvare -->
-        <div class="mt-8 text-center">
+        <div class="text-center">
             <button onclick="saveAllChanges()" class="px-12 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all text-lg">
                 <span class="flex items-center justify-center gap-3">
                     <span class="material-icons">save</span>
                     SALVEAZĂ TOATE MODIFICĂRILE
                 </span>
             </button>
-            <p class="text-sm text-slate-500 mt-4">⚠️ Modificările se salvează în acest browser</p>
+            <p class="text-sm text-slate-500 mt-4">⚠️ Modificările se salvează în localStorage și poți genera codul</p>
         </div>
 
-        <!-- Status -->
-        <div id="message" class="fixed bottom-4 right-4"></div>
+        <!-- Mesaje -->
+        <div id="message-container" class="fixed bottom-4 right-4 z-50"></div>
     </div>
 
     <script>
-        // ===== ÎNCĂRCARE DATE SALVATE =====
-        function loadSavedData() {
-            const saved = localStorage.getItem('siteData');
-            if (saved) {
-                try {
-                    const data = JSON.parse(saved);
-                    document.getElementById('hero_title').value = data.hero_title || '';
-                    document.getElementById('hero_subtitle').value = data.hero_subtitle || '';
-                    document.getElementById('phone').value = data.phone || '';
-                    document.getElementById('address').value = data.address || '';
-                    document.getElementById('price_basic').value = data.price_basic || '';
-                    document.getElementById('price_complet').value = data.price_complet || '';
-                    
-                    showMessage('✅ Date încărcate din salvare', 'green');
-                } catch (e) {
-                    console.log('Eroare la încărcare');
-                }
-            } else {
-                // Valori implicite
-                document.getElementById('hero_title').value = 'Instalări Windows ┃ Mioveni';
-                document.getElementById('hero_subtitle').value = 'Servicii profesionale de instalare sisteme de operare, actualizare drivere și optimizare software pentru performanță maximă.';
-                document.getElementById('phone').value = '0748 123 456';
-                document.getElementById('address').value = 'Strada Principală, Mioveni';
-                document.getElementById('price_basic').value = '100';
-                document.getElementById('price_complet').value = '180';
-            }
+        // ===== FUNCȚII TAB-URI =====
+        function showTab(tabName) {
+            // Ascunde toate tab-urile
+            document.getElementById('tab-preturi-content').classList.add('hidden');
+            document.getElementById('tab-contact-content').classList.add('hidden');
+            document.getElementById('tab-text-content').classList.add('hidden');
+            document.getElementById('tab-servicii-content').classList.add('hidden');
+            document.getElementById('tab-imagini-content').classList.add('hidden');
+            document.getElementById('tab-program-content').classList.add('hidden');
+            
+            // Arată tab-ul selectat
+            document.getElementById(`tab-${tabName}-content`).classList.remove('hidden');
+            
+            // Actualizează butoanele
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white');
+                btn.classList.add('bg-white', 'text-slate-700');
+            });
+            document.getElementById(`tab-${tabName}`).classList.add('bg-blue-600', 'text-white');
         }
 
-        // ===== SALVARE TOATE DATELE =====
+        // ===== SALVARE DATE =====
         function saveAllChanges() {
-            const data = {
+            // Colectează toate datele
+            const newData = {
+                // Text
                 hero_title: document.getElementById('hero_title').value,
                 hero_subtitle: document.getElementById('hero_subtitle').value,
+                
+                // Contact
                 phone: document.getElementById('phone').value,
                 address: document.getElementById('address').value,
+                
+                // Program
+                program_week: document.getElementById('program_week').value,
+                program_sat: document.getElementById('program_sat').value,
+                
+                // Prețuri
                 price_basic: document.getElementById('price_basic').value,
                 price_complet: document.getElementById('price_complet').value,
-                lastSaved: new Date().toLocaleString()
+                
+                // Servicii
+                service1_desc: document.getElementById('service1_desc').value,
+                service2_desc: document.getElementById('service2_desc').value,
+                service3_desc: document.getElementById('service3_desc').value,
+                service4_desc: document.getElementById('service4_desc').value,
+                
+                // Imagini
+                header_image: document.getElementById('header_image').value
             };
-            
+
             // Salvare în localStorage
-            localStorage.setItem('siteData', JSON.stringify(data));
+            localStorage.setItem('siteData', JSON.stringify(newData));
             
-            // Afișează codul de inserat
-            const codHtml = generateHtmlCode(data);
+            // Generează codul pentru index.html
+            const codHtml = generateHtmlCode(newData);
             
-            // Afișează mesaj și codul
+            // Afișează mesaj
             showMessage('✅ Date salvate cu succes!', 'green');
             
-            // Arată instrucțiuni
-            alert(`
-✅ DATE SALVATE LOCAL!
-
-Acum trebuie să:
-1. Deschizi fișierul index.html
-2. Cauți secțiunea cu "date implicite"
-3. Înlocuiești cu codul din consolă
-
-Apasă F12 și mergi la tab-ul "Console" pentru a vedea codul.
-            `);
-            
-            console.log('%c🔴 CODUL DE INSERAT ÎN index.html:', 'font-size: 16px; font-weight: bold; color: red;');
+            // Arată instrucțiuni și codul în consolă
+            console.log('%c🔴 COPY THIS CODE AND PASTE IN index.html (before </body>):', 'font-size: 16px; font-weight: bold; color: red;');
             console.log(codHtml);
+            
+            // Copiază automat în clipboard
+            navigator.clipboard.writeText(codHtml).then(() => {
+                showMessage('📋 Cod copiat în clipboard!', 'blue');
+            }).catch(() => {
+                alert('✅ Date salvate! Deschide consola (F12) și copiază codul afișat acolo.');
+            });
         }
 
-        // ===== GENERARE COD PENTRU index.html =====
+        // ===== GENERARE COD =====
         function generateHtmlCode(data) {
-            return `
+            return `<!-- DATE DIN ADMIN - Actualizat la ${new Date().toLocaleString()} -->
 <script>
-    // DATE DIN ADMIN - Actualizat la ${new Date().toLocaleString()}
+    // Date din panoul de administrare
     const siteData = {
-        hero_title: "${data.hero_title}",
-        hero_subtitle: "${data.hero_subtitle}",
+        hero_title: "${data.hero_title.replace(/"/g, '\\"')}",
+        hero_subtitle: "${data.hero_subtitle.replace(/"/g, '\\"').replace(/\n/g, '\\n')}",
         phone: "${data.phone}",
         address: "${data.address}",
-        price_basic: "${data.price_basic} RON",
-        price_complet: "${data.price_complet} RON"
+        program_week: "${data.program_week}",
+        program_sat: "${data.program_sat}",
+        price_basic: "${data.price_basic}",
+        price_complet: "${data.price_complet}",
+        service1_desc: "${data.service1_desc.replace(/"/g, '\\"')}",
+        service2_desc: "${data.service2_desc.replace(/"/g, '\\"')}",
+        service3_desc: "${data.service3_desc.replace(/"/g, '\\"')}",
+        service4_desc: "${data.service4_desc.replace(/"/g, '\\"')}",
+        header_image: "${data.header_image}"
     };
 
     // Aplică datele pe site
@@ -204,28 +277,104 @@ Apasă F12 și mergi la tab-ul "Console" pentru a vedea codul.
         if (document.getElementById('phone-text')) {
             document.getElementById('phone-text').textContent = siteData.phone;
             document.getElementById('phone-link').href = 'tel:' + siteData.phone.replace(/\\s/g, '');
+            document.getElementById('footer-phone').textContent = siteData.phone;
+            document.getElementById('footer-phone').href = 'tel:' + siteData.phone.replace(/\\s/g, '');
         }
         if (document.getElementById('address')) 
             document.getElementById('address').textContent = siteData.address;
+        if (document.getElementById('program-week')) 
+            document.getElementById('program-week').textContent = siteData.program_week;
+        if (document.getElementById('program-sat')) 
+            document.getElementById('program-sat').textContent = siteData.program_sat;
         if (document.getElementById('price-basic')) 
             document.getElementById('price-basic').textContent = siteData.price_basic;
         if (document.getElementById('price-complet')) 
             document.getElementById('price-complet').textContent = siteData.price_complet;
+        if (document.getElementById('service1-desc')) 
+            document.getElementById('service1-desc').textContent = siteData.service1_desc;
+        if (document.getElementById('service2-desc')) 
+            document.getElementById('service2-desc').textContent = siteData.service2_desc;
+        if (document.getElementById('service3-desc')) 
+            document.getElementById('service3-desc').textContent = siteData.service3_desc;
+        if (document.getElementById('service4-desc')) 
+            document.getElementById('service4-desc').textContent = siteData.service4_desc;
+        if (document.getElementById('header-image')) 
+            document.getElementById('header-image').src = siteData.header_image;
     });
 </script>`;
         }
 
         // ===== AFIȘARE MESAJ =====
         function showMessage(text, color) {
-            const msgDiv = document.getElementById('message');
-            msgDiv.innerHTML = `<div class="bg-${color}-500 text-white px-6 py-3 rounded-lg shadow-lg success">${text}</div>`;
+            const container = document.getElementById('message-container');
+            const msg = document.createElement('div');
+            msg.className = `bg-${color}-500 text-white px-6 py-4 rounded-lg shadow-lg mb-2 success-message flex items-center gap-2`;
+            msg.innerHTML = `<span class="material-icons">${color === 'green' ? 'check_circle' : color === 'blue' ? 'content_copy' : 'info'}</span> ${text}`;
+            container.appendChild(msg);
+            
             setTimeout(() => {
-                msgDiv.innerHTML = '';
+                msg.remove();
             }, 3000);
         }
 
+        // ===== PREVIZUALIZARE IMAGINI =====
+        document.getElementById('header_image').addEventListener('input', function() {
+            if (this.value) {
+                document.getElementById('header-preview').innerHTML = `<img src="${this.value}" class="preview-image">`;
+            }
+        });
+
+        // ===== ÎNCĂRCARE DATE SALVATE =====
+        function loadSavedData() {
+            const saved = localStorage.getItem('siteData');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    
+                    // Text
+                    document.getElementById('hero_title').value = data.hero_title || 'Instalări Windows ┃ Mioveni';
+                    document.getElementById('hero_subtitle').value = data.hero_subtitle || 'Servicii profesionale...';
+                    
+                    // Contact
+                    document.getElementById('phone').value = data.phone || '0748 123 456';
+                    document.getElementById('address').value = data.address || 'Strada Principală, Mioveni';
+                    
+                    // Program
+                    document.getElementById('program_week').value = data.program_week || '09:00 - 18:00';
+                    document.getElementById('program_sat').value = data.program_sat || '10:00 - 14:00';
+                    
+                    // Prețuri
+                    document.getElementById('price_basic').value = data.price_basic || '100 RON';
+                    document.getElementById('price_complet').value = data.price_complet || '180 RON';
+                    
+                    // Servicii
+                    document.getElementById('service1_desc').value = data.service1_desc || 'Instalare profesională...';
+                    document.getElementById('service2_desc').value = data.service2_desc || 'Curățare software...';
+                    document.getElementById('service3_desc').value = data.service3_desc || 'Instalare drivere...';
+                    document.getElementById('service4_desc').value = data.service4_desc || 'Recuperare date...';
+                    
+                    // Imagini
+                    document.getElementById('header_image').value = data.header_image || 'https://images.unsplash.com/photo-1588702547919-26089e690eca';
+                    
+                    showMessage('✅ Date încărcate din salvare', 'green');
+                } catch (e) {
+                    console.log('Eroare la încărcare');
+                }
+            }
+        }
+
         // ===== LA ÎNCĂRCARE =====
-        window.onload = loadSavedData;
+        window.onload = function() {
+            loadSavedData();
+            showTab('preturi');
+            
+            // Previzualizare inițială imagine
+            setTimeout(() => {
+                if (document.getElementById('header_image').value) {
+                    document.getElementById('header-preview').innerHTML = `<img src="${document.getElementById('header_image').value}" class="preview-image">`;
+                }
+            }, 500);
+        };
     </script>
 
     <!-- Instrucțiuni -->
@@ -236,15 +385,15 @@ Apasă F12 și mergi la tab-ul "Console" pentru a vedea codul.
                 Instrucțiuni:
             </h4>
             <ol class="list-decimal ml-8 space-y-1">
-                <li>Modifică ce ai nevoie în câmpurile de mai sus</li>
-                <li>Apasă "SALVEAZĂ TOATE MODIFICĂRILE"</li>
-                <li>Deschide consola (F12) și copiază codul afișat</li>
-                <li>Deschide fișierul index.html și adaugă codul la sfârșit, înainte de <code>&lt;/body&gt;</code></li>
-                <li>Încarcă noul index.html pe server</li>
+                <li><span class="font-semibold">Modifică</span> ce ai nevoie în fiecare tab</li>
+                <li><span class="font-semibold">Apasă "SALVEAZĂ"</span> - datele se salvează în browser</li>
+                <li><span class="font-semibold">Deschide consola (F12)</span> și vei vedea codul generat</li>
+                <li><span class="font-semibold">Copiază codul</span> din consolă (s-a copiat automat în clipboard)</li>
+                <li><span class="font-semibold">Deschide index.html</span> și adaugă codul înainte de <code>&lt;/body&gt;</code></li>
+                <li><span class="font-semibold">Încarcă</span> noul index.html pe server</li>
             </ol>
-            <p class="mt-4 text-yellow-700 bg-yellow-50 p-3 rounded-lg">
-                <span class="font-bold">⚠️ ATENȚIE:</span> Modificările se salvează DOAR în acest panou. 
-                Pentru a le vedea pe site, trebuie să copiezi codul din consolă în index.html.
+            <p class="mt-4 bg-yellow-100 text-yellow-800 p-3 rounded-lg">
+                <span class="font-bold">✅ Acum poți modifica:</span> Prețuri, Telefon, Adresă, Program, Titlu, Subtitlu, Descrieri Servicii, Imagine Header
             </p>
         </div>
     </div>
