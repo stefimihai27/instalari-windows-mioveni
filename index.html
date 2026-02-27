@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -37,7 +36,7 @@
             <div class="flex justify-between items-center h-20">
                 <div class="flex items-center gap-2">
                     <div class="bg-primary p-2 rounded-lg">
-                        <span class="material-icons text-white">desktop_windows</span>
+                        <span class="material-icons text-white" id="header-icon">desktop_windows</span>
                     </div>
                     <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                         Windows<span class="text-primary">Mioveni</span>
@@ -48,15 +47,11 @@
                     <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#servicii">Servicii</a>
                     <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#preturi">Prețuri</a>
                     <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#contact">Contact</a>
-                    <a id="admin-link" class="text-sm font-semibold text-orange-600 bg-orange-50 px-3 py-1 rounded-full hover:bg-orange-100 hidden transition-all" href="/admin/">
-                        <span class="material-icons-outlined text-xs mr-1">admin_panel_settings</span>
-                        Admin
-                    </a>
                 </div>
                 <div class="hidden md:block">
-                    <a id="phone-link" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 text-primary font-bold hover:bg-primary/20 transition-all" href="tel:0700000000">
+                    <a class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 text-primary font-bold hover:bg-primary/20 transition-all" href="tel:0748123456" id="phone-link">
                         <span class="material-icons text-sm">phone</span>
-                        <span id="dynamic-phone" data-cms-field="phone">07xx xxx xxx</span>
+                        <span id="phone-text">0748 123 456</span>
                     </a>
                 </div>
             </div>
@@ -65,7 +60,7 @@
 
     <header class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-background-light dark:bg-background-dark">
         <div class="absolute inset-0 z-0">
-            <img alt="Clean workspace" class="w-full h-full object-cover opacity-20" src="https://images.unsplash.com/photo-1588702547919-26089e690eca?auto=format&fit=crop&q=80&w=2070"/>
+            <img alt="Clean workspace" class="w-full h-full object-cover opacity-20" id="header-image" src="https://images.unsplash.com/photo-1588702547919-26089e690eca?auto=format&fit=crop&q=80&w=2070"/>
             <div class="absolute inset-0 bg-gradient-to-r from-background-light via-background-light/95 to-transparent dark:from-background-dark dark:via-background-dark/95"></div>
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-24">
@@ -77,17 +72,17 @@
                     </span>
                     Servicii Disponibile în Mioveni
                 </div>
-                <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white leading-tight mb-6">
-                    <span data-cms-field="hero_title">Instalări Windows ┃ Mioveni</span>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white leading-tight mb-6" id="hero-title">
+                    Instalări Windows <span class="text-primary">┃</span> Mioveni
                 </h1>
-                <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed mb-10 max-w-2xl">
+                <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed mb-10 max-w-2xl" id="hero-subtitle">
                     Servicii profesionale de instalare sisteme de operare, actualizare drivere și optimizare software pentru performanță maximă.
                 </p>
                 <div class="flex flex-col sm:flex-row items-center gap-4">
-                    <button class="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 group">
+                    <a href="#contact" class="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 group">
                         Programare Rapidă
                         <span class="material-icons group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                    </button>
+                    </a>
                     <a href="#preturi" class="w-full sm:w-auto px-8 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-center text-slate-700 dark:text-slate-200 font-bold rounded-xl transition-all">
                         Vezi Prețuri
                     </a>
@@ -108,28 +103,28 @@
                     <span class="material-icons-outlined text-3xl text-primary group-hover:text-white">window</span>
                 </div>
                 <h3 class="text-xl font-bold mb-3">Instalare Windows</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow">Instalare profesională pentru Windows 10 și 11, activare licență și configurări inițiale.</p>
+                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow" id="service1-desc">Instalare profesională pentru Windows 10 și 11, activare licență și configurări inițiale.</p>
             </div>
             <div class="group p-8 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all flex flex-col h-full">
                 <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
                     <span class="material-icons-outlined text-3xl text-primary group-hover:text-white">speed</span>
                 </div>
                 <h3 class="text-xl font-bold mb-3">Optimizare Sistem</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow">Curățare software, eliminare fișiere temporare și optimizare startup.</p>
+                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow" id="service2-desc">Curățare software, eliminare fișiere temporare și optimizare startup.</p>
             </div>
             <div class="group p-8 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all flex flex-col h-full">
                 <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
                     <span class="material-icons-outlined text-3xl text-primary group-hover:text-white">settings_suggest</span>
                 </div>
                 <h3 class="text-xl font-bold mb-3">Drivere & Programe</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow">Instalare drivere compatibile, suită Office și browsere.</p>
+                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow" id="service3-desc">Instalare drivere compatibile, suită Office și browsere.</p>
             </div>
             <div class="group p-8 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all flex flex-col h-full">
                 <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
                     <span class="material-icons-outlined text-3xl text-primary group-hover:text-white">settings_backup_restore</span>
                 </div>
                 <h3 class="text-xl font-bold mb-3">Recuperare Date</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow">Recuperare profesională a fișierelor pierdute sau șterse accidental.</p>
+                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow" id="service4-desc">Recuperare profesională a fișierelor pierdute sau șterse accidental.</p>
             </div>
         </div>
     </section>
@@ -142,54 +137,123 @@
             <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-8 flex flex-col hover:shadow-md transition-all">
                     <h3 class="text-xl font-bold mb-2">Pachet Basic</h3>
-                    <div class="text-4xl font-bold my-6">
-                        <span data-cms-field="price_basic">100</span> RON
-                    </div>
+                    <div class="text-4xl font-bold my-6" id="price-basic">100 RON</div>
                     <ul class="space-y-4 mb-10 flex-grow">
                         <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Instalare Windows (10/11)</span></li>
                         <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Drivere de bază</span></li>
                     </ul>
-                    <button class="w-full py-3 rounded-lg border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">Solicită Pachet</button>
+                    <a href="#contact" class="w-full py-3 rounded-lg border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all text-center">Solicită Pachet</a>
                 </div>
                 <div class="bg-white dark:bg-slate-800 rounded-xl border-2 border-primary p-8 flex flex-col relative transform scale-105 shadow-xl">
                     <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white px-4 py-1 rounded-full text-xs font-bold uppercase">Recomandat</div>
                     <h3 class="text-xl font-bold mb-2">Pachet Complet</h3>
-                    <div class="text-4xl font-bold my-6">
-                        <span data-cms-field="price_complet">180</span> RON
-                    </div>
+                    <div class="text-4xl font-bold my-6" id="price-complet">180 RON</div>
                     <ul class="space-y-4 mb-10 flex-grow">
                         <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Windows + Optimizare</span></li>
                         <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Backup date & Office</span></li>
                     </ul>
-                    <button class="w-full py-3 rounded-lg bg-primary text-white font-bold hover:bg-blue-700 transition-all shadow-lg shadow-primary/20">Solicită Pachet</button>
+                    <a href="#contact" class="w-full py-3 rounded-lg bg-primary text-white font-bold hover:bg-blue-700 transition-all shadow-lg shadow-primary/20 text-center">Solicită Pachet</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <script>
-        if (window.netlifyIdentity) {
-            netlifyIdentity.on('init', user => {
-                if (user) {
-                    document.getElementById('admin-link').classList.remove('hidden');
-                }
-            });
-            netlifyIdentity.on('login', () => {
-                document.getElementById('admin-link').classList.remove('hidden');
-            });
-        }
-    </script>
+    <section id="contact" class="py-20 bg-slate-50 dark:bg-slate-900/50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-3xl font-bold mb-6">Contactează-ne</h2>
+                    <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                        <form class="space-y-4" id="contact-form">
+                            <input class="w-full px-4 py-2 rounded border border-slate-300 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-primary" placeholder="Nume" type="text" name="nume" required/>
+                            <input class="w-full px-4 py-2 rounded border border-slate-300 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-primary" placeholder="Telefon" type="tel" name="telefon" required/>
+                            <textarea class="w-full px-4 py-2 rounded border border-slate-300 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-primary" placeholder="Mesaj" name="mesaj" rows="4" required></textarea>
+                            <button type="submit" class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-all">Trimite Mesaj</button>
+                        </form>
+                        <div id="form-message" class="mt-4 text-center hidden"></div>
+                    </div>
+                </div>
+                <div class="space-y-8">
+                    <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                        <h3 class="font-bold mb-4 flex items-center gap-2"><span class="material-icons text-primary">schedule</span>Program</h3>
+                        <p class="flex justify-between border-b pb-2"><span>Luni - Vineri</span><b id="program-week">09:00 - 18:00</b></p>
+                        <p class="flex justify-between pt-2"><span>Sâmbătă</span><b id="program-sat">10:00 - 14:00</b></p>
+                        <div class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
+                            <p class="flex items-center gap-2"><span class="material-icons text-primary">phone</span> <a href="tel:0748123456" id="footer-phone" class="hover:text-primary">0748 123 456</a></p>
+                            <p class="flex items-center gap-2 mt-2"><span class="material-icons text-primary">location_on</span> <span id="address">Strada Principală, Mioveni</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-8">
+        <div class="max-w-6xl mx-auto px-4 text-center text-sm text-slate-500">
+            <p>© 2025 Service IT Mioveni. Toate drepturile rezervate.</p>
+        </div>
+    </footer>
 
     <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
+        // Încărcare date din JSON
+        fetch('/data/content.json?t=' + new Date().getTime())
+            .then(response => response.json())
+            .then(data => {
+                // Text
+                if (data.hero_title) document.getElementById('hero-title').innerHTML = data.hero_title;
+                if (data.hero_subtitle) document.getElementById('hero-subtitle').textContent = data.hero_subtitle;
+                
+                // Prețuri
+                if (data.price_basic) document.getElementById('price-basic').textContent = data.price_basic;
+                if (data.price_complet) document.getElementById('price-complet').textContent = data.price_complet;
+                
+                // Telefon
+                if (data.phone) {
+                    document.getElementById('phone-text').textContent = data.phone;
+                    document.getElementById('phone-link').href = 'tel:' + data.phone.replace(/\s/g, '');
+                    document.getElementById('footer-phone').textContent = data.phone;
+                    document.getElementById('footer-phone').href = 'tel:' + data.phone.replace(/\s/g, '');
+                }
+                
+                // Adresă
+                if (data.address) document.getElementById('address').textContent = data.address;
+                
+                // Program
+                if (data.program_week) document.getElementById('program-week').textContent = data.program_week;
+                if (data.program_sat) document.getElementById('program-sat').textContent = data.program_sat;
+                
+                // Servicii descrieri
+                if (data.service1_desc) document.getElementById('service1-desc').textContent = data.service1_desc;
+                if (data.service2_desc) document.getElementById('service2-desc').textContent = data.service2_desc;
+                if (data.service3_desc) document.getElementById('service3-desc').textContent = data.service3_desc;
+                if (data.service4_desc) document.getElementById('service4-desc').textContent = data.service4_desc;
+                
+                // Imagini
+                if (data.header_image) document.getElementById('header-image').src = data.header_image;
+                if (data.logo_image) document.getElementById('header-icon').textContent = '';
+
+                console.log('Date încărcate cu succes!');
+            })
+            .catch(err => console.log('Nu s-au putut încărca datele:', err));
+
+        // Formular contact
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const data = {
+                nume: formData.get('nume'),
+                telefon: formData.get('telefon'),
+                mesaj: formData.get('mesaj')
+            };
+            
+            // Aici poți trimite email folosind un serviciu
+            console.log('Formular trimis:', data);
+            
+            document.getElementById('form-message').classList.remove('hidden');
+            document.getElementById('form-message').innerHTML = 'Mesajul a fost trimis! Vom reveni în curând.';
+            document.getElementById('form-message').classList.add('bg-green-100', 'text-green-700', 'p-3', 'rounded');
+            this.reset();
         });
-      }
     </script>
 </body>
 </html>
