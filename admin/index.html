@@ -12,6 +12,8 @@
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; } }
         .preview-image { max-width: 200px; max-height: 150px; object-fit: cover; border-radius: 8px; margin-top: 10px; border: 2px solid #195de6; }
         .tab-active { background-color: #195de6 !important; color: white !important; }
+        .service-item, .package-item { transition: all 0.3s; border-left: 4px solid #195de6; }
+        .service-item:hover, .package-item:hover { background-color: #f0f7ff; }
     </style>
 </head>
 <body class="bg-slate-100 font-sans">
@@ -49,6 +51,7 @@
             <button onclick="showTab('program')" id="tab-program" class="tab-btn px-6 py-3 rounded-lg font-semibold">⏰ Program</button>
             <button onclick="showTab('text')" id="tab-text" class="tab-btn px-6 py-3 rounded-lg font-semibold">📝 Text</button>
             <button onclick="showTab('servicii')" id="tab-servicii" class="tab-btn px-6 py-3 rounded-lg font-semibold">⚙️ Servicii</button>
+            <button onclick="showTab('pachete')" id="tab-pachete" class="tab-btn px-6 py-3 rounded-lg font-semibold">📦 Pachete</button>
             <button onclick="showTab('imagini')" id="tab-imagini" class="tab-btn px-6 py-3 rounded-lg font-semibold">🖼️ Imagini</button>
         </div>
 
@@ -120,28 +123,38 @@
             </div>
         </div>
 
-        <!-- Tab: Servicii -->
+        <!-- Tab: Servicii (DINAMIC) -->
         <div id="tab-servicii-content" class="hidden bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-6">
-            <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-orange-700">
-                <span class="material-icons">build</span> Descrieri Servicii
-            </h3>
-            <div class="grid gap-6">
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Serviciu 1 - Instalare Windows</label>
-                    <textarea id="service1_desc" rows="2" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-orange-600 outline-none"></textarea>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Serviciu 2 - Optimizare Sistem</label>
-                    <textarea id="service2_desc" rows="2" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-orange-600 outline-none"></textarea>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Serviciu 3 - Drivere & Programe</label>
-                    <textarea id="service3_desc" rows="2" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-orange-600 outline-none"></textarea>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Serviciu 4 - Recuperare Date</label>
-                    <textarea id="service4_desc" rows="2" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-orange-600 outline-none"></textarea>
-                </div>
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold flex items-center gap-2 text-orange-700">
+                    <span class="material-icons">build</span> Listă Servicii
+                </h3>
+                <button onclick="addService()" class="flex items-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700">
+                    <span class="material-icons text-sm">add</span>
+                    Adaugă Serviciu Nou
+                </button>
+            </div>
+            
+            <div id="services-container" class="space-y-4">
+                <!-- Serviciile vor fi generate dinamic aici -->
+            </div>
+            <p class="text-xs text-gray-500 mt-4">* Poți modifica textul, iconița și titlul fiecărui serviciu</p>
+        </div>
+
+        <!-- Tab: Pachete (DINAMIC) -->
+        <div id="tab-pachete-content" class="hidden bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold flex items-center gap-2 text-green-700">
+                    <span class="material-icons">inventory</span> Listă Pachete
+                </h3>
+                <button onclick="addPackage()" class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                    <span class="material-icons text-sm">add</span>
+                    Adaugă Pachet Nou
+                </button>
+            </div>
+            
+            <div id="packages-container" class="space-y-6">
+                <!-- Pachetele vor fi generate dinamic aici -->
             </div>
         </div>
 
@@ -175,6 +188,31 @@
     </div>
 
     <script>
+        // ===== DATE GLOBALE =====
+        let services = [
+            { id: 1, icon: "window", title: "Instalare Windows", desc: "Instalare profesională pentru Windows 10 și 11, activare licență și configurări inițiale." },
+            { id: 2, icon: "speed", title: "Optimizare Sistem", desc: "Curățare software, eliminare fișiere temporare și optimizare startup." },
+            { id: 3, icon: "settings_suggest", title: "Drivere & Programe", desc: "Instalare drivere compatibile, suită Office și browsere." },
+            { id: 4, icon: "settings_backup_restore", title: "Recuperare Date", desc: "Recuperare profesională a fișierelor pierdute sau șterse accidental." }
+        ];
+
+        let packages = [
+            { 
+                id: 1, 
+                name: "Pachet Basic", 
+                price: "100 RON", 
+                recommended: false,
+                benefits: ["Instalare Windows (10/11)", "Drivere de bază"] 
+            },
+            { 
+                id: 2, 
+                name: "Pachet Complet", 
+                price: "180 RON", 
+                recommended: true,
+                benefits: ["Windows + Optimizare", "Backup date & Office"] 
+            }
+        ];
+
         // ===== FUNCȚII TAB-URI =====
         function showTab(tabName) {
             // Ascunde toate tab-urile
@@ -183,6 +221,7 @@
             document.getElementById('tab-program-content').classList.add('hidden');
             document.getElementById('tab-text-content').classList.add('hidden');
             document.getElementById('tab-servicii-content').classList.add('hidden');
+            document.getElementById('tab-pachete-content').classList.add('hidden');
             document.getElementById('tab-imagini-content').classList.add('hidden');
             
             // Arată tab-ul selectat
@@ -194,24 +233,253 @@
                 btn.classList.add('bg-white', 'text-slate-700');
             });
             document.getElementById(`tab-${tabName}`).classList.add('bg-blue-600', 'text-white');
+
+            // Reîmprospătează afișarea pentru tab-urile dinamice
+            if (tabName === 'servicii') renderServices();
+            if (tabName === 'pachete') renderPackages();
+        }
+
+        // ===== FUNCȚII PENTRU SERVICII =====
+        function renderServices() {
+            const container = document.getElementById('services-container');
+            container.innerHTML = '';
+
+            services.forEach((service, index) => {
+                const serviceDiv = document.createElement('div');
+                serviceDiv.className = 'service-item bg-gray-50 p-4 rounded-lg border border-gray-200';
+                serviceDiv.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-orange-700">Serviciu #${index + 1}</h4>
+                        <button onclick="deleteService(${service.id})" class="text-red-500 hover:text-red-700">
+                            <span class="material-icons">delete</span>
+                        </button>
+                    </div>
+                    <div class="grid gap-3">
+                        <div>
+                            <label class="text-xs text-gray-500">Iconiță (ex: window, speed, settings_suggest)</label>
+                            <input type="text" class="service-icon w-full p-2 border rounded" value="${service.icon}" data-id="${service.id}">
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-500">Titlu</label>
+                            <input type="text" class="service-title w-full p-2 border rounded" value="${service.title}" data-id="${service.id}">
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-500">Descriere</label>
+                            <textarea class="service-desc w-full p-2 border rounded" rows="2" data-id="${service.id}">${service.desc}</textarea>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(serviceDiv);
+            });
+
+            // Adaugă event listeners pentru input-uri
+            document.querySelectorAll('.service-icon').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    const service = services.find(s => s.id === id);
+                    if (service) service.icon = e.target.value;
+                });
+            });
+
+            document.querySelectorAll('.service-title').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    const service = services.find(s => s.id === id);
+                    if (service) service.title = e.target.value;
+                });
+            });
+
+            document.querySelectorAll('.service-desc').forEach(textarea => {
+                textarea.addEventListener('change', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    const service = services.find(s => s.id === id);
+                    if (service) service.desc = e.target.value;
+                });
+            });
+        }
+
+        function addService() {
+            const newId = Date.now();
+            services.push({
+                id: newId,
+                icon: "computer",
+                title: "Serviciu Nou",
+                desc: "Descriere pentru noul serviciu"
+            });
+            renderServices();
+            showMessage('✅ Serviciu adăugat', 'green');
+        }
+
+        function deleteService(id) {
+            if (confirm('Sigur vrei să ștergi acest serviciu?')) {
+                services = services.filter(s => s.id !== id);
+                renderServices();
+                showMessage('✅ Serviciu șters', 'green');
+            }
+        }
+
+        // ===== FUNCȚII PENTRU PACHETE =====
+        function renderPackages() {
+            const container = document.getElementById('packages-container');
+            container.innerHTML = '';
+
+            packages.forEach((pkg, index) => {
+                const packageDiv = document.createElement('div');
+                packageDiv.className = `package-item bg-gray-50 p-4 rounded-lg border ${pkg.recommended ? 'border-green-500 bg-green-50' : 'border-gray-200'}`;
+                
+                // Construiește beneficiile
+                let benefitsHtml = '';
+                pkg.benefits.forEach((benefit, bIndex) => {
+                    benefitsHtml += `
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="material-icons text-green-600 text-sm">check_circle</span>
+                            <input type="text" class="benefit-input flex-1 p-2 border rounded text-sm" value="${benefit}" data-package-id="${pkg.id}" data-benefit-index="${bIndex}">
+                            <button onclick="removeBenefit(${pkg.id}, ${bIndex})" class="text-red-400 hover:text-red-600">
+                                <span class="material-icons text-sm">close</span>
+                            </button>
+                        </div>
+                    `;
+                });
+
+                packageDiv.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex items-center gap-2">
+                            <h4 class="font-bold text-green-700">Pachet #${index + 1}</h4>
+                            ${pkg.recommended ? '<span class="bg-green-600 text-white text-xs px-2 py-1 rounded-full">RECOMANDAT</span>' : ''}
+                        </div>
+                        <button onclick="deletePackage(${pkg.id})" class="text-red-500 hover:text-red-700">
+                            <span class="material-icons">delete</span>
+                        </button>
+                    </div>
+                    <div class="grid gap-3">
+                        <div>
+                            <label class="text-xs text-gray-500">Nume Pachet</label>
+                            <input type="text" class="package-name w-full p-2 border rounded" value="${pkg.name}" data-id="${pkg.id}">
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-500">Preț</label>
+                            <input type="text" class="package-price w-full p-2 border rounded" value="${pkg.price}" data-id="${pkg.id}">
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" class="package-recommended" data-id="${pkg.id}" ${pkg.recommended ? 'checked' : ''}>
+                            <label class="text-sm">Marchează ca RECOMANDAT</label>
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-500">Beneficii</label>
+                            ${benefitsHtml}
+                            <button onclick="addBenefit(${pkg.id})" class="mt-2 text-sm text-green-600 hover:text-green-800 flex items-center gap-1">
+                                <span class="material-icons text-sm">add</span> Adaugă beneficiu
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(packageDiv);
+            });
+
+            // Adaugă event listeners
+            document.querySelectorAll('.package-name').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    const pkg = packages.find(p => p.id === id);
+                    if (pkg) pkg.name = e.target.value;
+                });
+            });
+
+            document.querySelectorAll('.package-price').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    const pkg = packages.find(p => p.id === id);
+                    if (pkg) pkg.price = e.target.value;
+                });
+            });
+
+            document.querySelectorAll('.package-recommended').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    const pkg = packages.find(p => p.id === id);
+                    if (pkg) {
+                        pkg.recommended = e.target.checked;
+                        renderPackages(); // Re-render pentru a actualiza stilul
+                    }
+                });
+            });
+
+            document.querySelectorAll('.benefit-input').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const packageId = parseInt(e.target.dataset.packageId);
+                    const benefitIndex = parseInt(e.target.dataset.benefitIndex);
+                    const pkg = packages.find(p => p.id === packageId);
+                    if (pkg && pkg.benefits[benefitIndex] !== undefined) {
+                        pkg.benefits[benefitIndex] = e.target.value;
+                    }
+                });
+            });
+        }
+
+        function addPackage() {
+            const newId = Date.now();
+            packages.push({
+                id: newId,
+                name: "Pachet Nou",
+                price: "0 RON",
+                recommended: false,
+                benefits: ["Beneficiu nou"]
+            });
+            renderPackages();
+            showMessage('✅ Pachet adăugat', 'green');
+        }
+
+        function deletePackage(id) {
+            if (confirm('Sigur vrei să ștergi acest pachet?')) {
+                packages = packages.filter(p => p.id !== id);
+                renderPackages();
+                showMessage('✅ Pachet șters', 'green');
+            }
+        }
+
+        function addBenefit(packageId) {
+            const pkg = packages.find(p => p.id === packageId);
+            if (pkg) {
+                pkg.benefits.push("Beneficiu nou");
+                renderPackages();
+            }
+        }
+
+        function removeBenefit(packageId, benefitIndex) {
+            const pkg = packages.find(p => p.id === packageId);
+            if (pkg && pkg.benefits.length > 1) {
+                pkg.benefits.splice(benefitIndex, 1);
+                renderPackages();
+            } else {
+                showMessage('❌ Trebuie să existe cel puțin un beneficiu', 'red');
+            }
         }
 
         // ===== SALVARE DATE =====
         function saveAllChanges() {
             // Colectează toate datele
             const newData = {
+                // Text
                 hero_title: document.getElementById('hero_title').value,
                 hero_subtitle: document.getElementById('hero_subtitle').value,
+                
+                // Contact
                 phone: document.getElementById('phone').value,
                 address: document.getElementById('address').value,
+                
+                // Program
                 program_week: document.getElementById('program_week').value,
                 program_sat: document.getElementById('program_sat').value,
+                
+                // Prețuri (păstrăm pentru compatibilitate)
                 price_basic: document.getElementById('price_basic').value,
                 price_complet: document.getElementById('price_complet').value,
-                service1_desc: document.getElementById('service1_desc').value,
-                service2_desc: document.getElementById('service2_desc').value,
-                service3_desc: document.getElementById('service3_desc').value,
-                service4_desc: document.getElementById('service4_desc').value,
+                
+                // Servicii și Pachete
+                services: services,
+                packages: packages,
+                
+                // Imagini
                 header_image: document.getElementById('header_image').value
             };
 
@@ -230,7 +498,7 @@
             const container = document.getElementById('message-container');
             const msg = document.createElement('div');
             msg.className = `bg-${color}-500 text-white px-6 py-4 rounded-lg shadow-lg mb-2 success-message flex items-center gap-2`;
-            msg.innerHTML = `<span class="material-icons">${color === 'green' ? 'check_circle' : 'info'}</span> ${text}`;
+            msg.innerHTML = `<span class="material-icons">${color === 'green' ? 'check_circle' : color === 'red' ? 'error' : 'info'}</span> ${text}`;
             container.appendChild(msg);
             
             setTimeout(() => {
@@ -252,18 +520,27 @@
                 try {
                     const data = JSON.parse(saved);
                     
+                    // Text
                     document.getElementById('hero_title').value = data.hero_title || '';
                     document.getElementById('hero_subtitle').value = data.hero_subtitle || '';
+                    
+                    // Contact
                     document.getElementById('phone').value = data.phone || '';
                     document.getElementById('address').value = data.address || '';
+                    
+                    // Program
                     document.getElementById('program_week').value = data.program_week || '';
                     document.getElementById('program_sat').value = data.program_sat || '';
+                    
+                    // Prețuri
                     document.getElementById('price_basic').value = data.price_basic || '';
                     document.getElementById('price_complet').value = data.price_complet || '';
-                    document.getElementById('service1_desc').value = data.service1_desc || '';
-                    document.getElementById('service2_desc').value = data.service2_desc || '';
-                    document.getElementById('service3_desc').value = data.service3_desc || '';
-                    document.getElementById('service4_desc').value = data.service4_desc || '';
+                    
+                    // Servicii și Pachete (dacă există)
+                    if (data.services) services = data.services;
+                    if (data.packages) packages = data.packages;
+                    
+                    // Imagini
                     document.getElementById('header_image').value = data.header_image || '';
                     
                     showMessage('✅ Date încărcate din localStorage', 'green');
@@ -290,6 +567,8 @@
             <ol class="list-decimal ml-8 space-y-1">
                 <li><span class="font-semibold">Login:</span> admin / admin2026</li>
                 <li><span class="font-semibold">Modifică</span> ce ai nevoie în fiecare tab</li>
+                <li><span class="font-semibold">Pentru Servicii:</span> poți adăuga, edita și șterge servicii</li>
+                <li><span class="font-semibold">Pentru Pachete:</span> poți adăuga, edita și șterge pachete, plus beneficii</li>
                 <li><span class="font-semibold">Apasă "SALVEAZĂ"</span> - datele se salvează în localStorage</li>
                 <li><span class="font-semibold">Pagina principală</span> va afișa automat datele salvate</li>
             </ol>
