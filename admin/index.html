@@ -1,92 +1,338 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html>
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Admin - Windows Mioveni</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Service IT Mioveni</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script>
-        // 1. LOGIN SIMPLU
-        const uCorect = "admin", pCorecta = "admin2026";
-        const uInput = prompt("Utilizator:"), pInput = prompt("Parolă:");
-        if (uInput !== uCorect || pInput !== pCorecta) { alert("Acces respins!"); window.location.href = "/"; }
-    </script>
+    <style>
+        .preview-image { max-width: 200px; max-height: 150px; object-fit: cover; border-radius: 8px; margin-top: 10px; border: 2px solid #195de6; }
+        .tab-active { background-color: #195de6 !important; color: white !important; }
+        .loading { opacity: 0.5; pointer-events: none; }
+    </style>
 </head>
-<body class="bg-slate-100 font-sans">
-    <div id="admin-ui" class="max-w-6xl mx-auto px-4 py-12">
-        <div class="text-center mb-12">
-            <h1 class="text-3xl font-bold text-slate-800 mb-2">Panou Control</h1>
-            <div class="w-20 h-1 bg-blue-600 mx-auto rounded-full"></div>
+<body class="bg-gray-100 p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <!-- Login Form -->
+        <div id="loginForm" class="bg-white p-8 rounded-xl shadow-lg max-w-md mx-auto mt-20">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="bg-primary p-2 rounded-lg">
+                    <span class="material-icons text-white">admin_panel_settings</span>
+                </div>
+                <h1 class="text-2xl font-bold">Autentificare Admin</h1>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-semibold mb-2">Utilizator</label>
+                <input type="text" id="username" class="w-full p-3 border rounded-lg" placeholder="Introduceți utilizator">
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-semibold mb-2">Parolă</label>
+                <input type="password" id="password" class="w-full p-3 border rounded-lg" placeholder="Introduceți parola">
+            </div>
+            
+            <button onclick="login()" class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-all">
+                Autentificare
+            </button>
+            
+            <p id="loginError" class="text-red-500 text-center mt-4 hidden">
+                Utilizator sau parolă incorectă!
+            </p>
         </div>
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-                <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-blue-700">
-                    <span class="material-icons">payments</span> Prețuri Servicii
-                </h3>
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Pachet Basic (RON)</label>
-                        <input id="in-basic" type="number" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none">
-                        <button onclick="handleSave('price_basic', 'in-basic')" class="mt-3 px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-all">Salvează</button>
+
+        <!-- Admin Panel (hidden initially) -->
+        <div id="adminPanel" class="hidden">
+            <!-- Header -->
+            <div class="bg-white p-6 rounded-xl shadow-lg mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="bg-primary p-2 rounded-lg">
+                        <span class="material-icons text-white">settings</span>
                     </div>
+                    <h1 class="text-2xl font-bold">Panou Administrare - Service IT Mioveni</h1>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="saveChanges()" class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                        <span class="material-icons text-sm">save</span>
+                        Salvează
+                    </button>
+                    <button onclick="logout()" class="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
+                        <span class="material-icons text-sm">logout</span>
+                        Deconectare
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex flex-wrap gap-2 mb-6">
+                <button onclick="showTab('text')" id="tabText" class="tab-btn px-6 py-3 bg-white rounded-lg font-semibold shadow hover:bg-gray-50 transition-all">📝 Text și Prețuri</button>
+                <button onclick="showTab('images')" id="tabImages" class="tab-btn px-6 py-3 bg-white rounded-lg font-semibold shadow hover:bg-gray-50 transition-all">🖼️ Imagini</button>
+                <button onclick="showTab('contact')" id="tabContact" class="tab-btn px-6 py-3 bg-white rounded-lg font-semibold shadow hover:bg-gray-50 transition-all">📞 Contact</button>
+                <button onclick="showTab('services')" id="tabServices" class="tab-btn px-6 py-3 bg-white rounded-lg font-semibold shadow hover:bg-gray-50 transition-all">⚙️ Servicii</button>
+            </div>
+
+            <!-- Tab: Text și Prețuri -->
+            <div id="tabTextContent" class="bg-white p-8 rounded-xl shadow-lg mb-6">
+                <h2 class="text-xl font-bold mb-6 text-primary border-b pb-2">📝 Modifică Text și Prețuri</h2>
+                
+                <div class="grid gap-6">
                     <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Pachet Complet (RON)</label>
-                        <input id="in-complet" type="number" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none">
-                        <button onclick="handleSave('price_complet', 'in-complet')" class="mt-3 px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-all">Salvează</button>
+                        <label class="block text-sm font-semibold mb-2">Titlu Principal</label>
+                        <input type="text" id="hero_title" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" placeholder="ex: Instalări Windows ┃ Mioveni">
+                        <p class="text-xs text-gray-500 mt-1">Titlul mare din header</p>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Subtitlu</label>
+                        <textarea id="hero_subtitle" rows="3" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Descrierea principală"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Preț Pachet Basic</label>
+                            <input type="text" id="price_basic" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" placeholder="ex: 100 RON">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Preț Pachet Complet</label>
+                            <input type="text" id="price_complet" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" placeholder="ex: 180 RON">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-                <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-emerald-700">
-                    <span class="material-icons">contact_phone</span> Contact Rapid
-                </h3>
-                <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Număr Telefon</label>
-                <input id="in-phone" type="tel" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-600 outline-none mb-4">
-                <button onclick="handleSave('phone', 'in-phone')" class="w-full py-3 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 transition-all uppercase tracking-widest">Actualizează Telefon</button>
+
+            <!-- Tab: Imagini -->
+            <div id="tabImagesContent" class="hidden bg-white p-8 rounded-xl shadow-lg mb-6">
+                <h2 class="text-xl font-bold mb-6 text-primary border-b pb-2">🖼️ Încarcă Imagini</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-primary transition-all">
+                        <span class="material-icons text-4xl text-gray-400 mb-2">image</span>
+                        <p class="font-semibold mb-2">Imagine Header (background)</p>
+                        <p class="text-sm text-gray-500 mb-4">Recomandat: 1920x1080px</p>
+                        <input type="file" id="headerImage" accept="image/*" class="hidden" onchange="previewImage(this, 'headerPreview')">
+                        <button onclick="document.getElementById('headerImage').click()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-all">
+                            Alege fișier
+                        </button>
+                        <div id="headerPreview" class="mt-4"></div>
+                    </div>
+
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-primary transition-all">
+                        <span class="material-icons text-4xl text-gray-400 mb-2">logo_dev</span>
+                        <p class="font-semibold mb-2">Logo / Iconiță</p>
+                        <p class="text-sm text-gray-500 mb-4">Recomandat: 64x64px</p>
+                        <input type="file" id="logoImage" accept="image/*" class="hidden" onchange="previewImage(this, 'logoPreview')">
+                        <button onclick="document.getElementById('logoImage').click()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-all">
+                            Alege fișier
+                        </button>
+                        <div id="logoPreview" class="mt-4"></div>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-500 mt-4 text-center">IMPORTANT: După ce alegi imaginile, apasă "Salvează" pentru a le încărca pe site.</p>
+            </div>
+
+            <!-- Tab: Contact -->
+            <div id="tabContactContent" class="hidden bg-white p-8 rounded-xl shadow-lg mb-6">
+                <h2 class="text-xl font-bold mb-6 text-primary border-b pb-2">📞 Informații Contact</h2>
+                
+                <div class="grid gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Număr Telefon</label>
+                        <input type="text" id="phone" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" placeholder="ex: 0748 123 456">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Adresă</label>
+                        <input type="text" id="address" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" placeholder="ex: Strada Principală, Mioveni">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Program Luni - Vineri</label>
+                            <input type="text" id="program_week" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" placeholder="ex: 09:00 - 18:00">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Program Sâmbătă</label>
+                            <input type="text" id="program_sat" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" placeholder="ex: 10:00 - 14:00">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Servicii -->
+            <div id="tabServicesContent" class="hidden bg-white p-8 rounded-xl shadow-lg mb-6">
+                <h2 class="text-xl font-bold mb-6 text-primary border-b pb-2">⚙️ Descrieri Servicii</h2>
+                
+                <div class="grid gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Serviciu 1 - Instalare Windows</label>
+                        <textarea id="service1_desc" rows="2" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Serviciu 2 - Optimizare Sistem</label>
+                        <textarea id="service2_desc" rows="2" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Serviciu 3 - Drivere & Programe</label>
+                        <textarea id="service3_desc" rows="2" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Serviciu 4 - Recuperare Date</label>
+                        <textarea id="service4_desc" rows="2" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Save Button (fixed on mobile) -->
+            <div class="sticky bottom-4 bg-white p-4 rounded-xl shadow-lg border border-primary/20 flex justify-end">
+                <button onclick="saveChanges()" class="w-full md:w-auto px-8 py-4 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 flex items-center justify-center gap-2">
+                    <span class="material-icons">save</span>
+                    Salvează Toate Modificările
+                </button>
             </div>
         </div>
     </div>
 
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <script>
-        CMS.init({
-            config: {
-                backend: { name: "github", repo: "stefimihai27/instalari-windows-mioveni", branch: "main", auth_type: "token" },
-                load_config_file: false,
-                display_url: "https://instalari-windows-mioveni.netlify.app",
-                collections: [{
-                    name: "setari", files: [{
-                        name: "home", file: "index.html",
-                        fields: [
-                            { label: "Telefon", name: "phone", widget: "string" },
-                            { label: "Pret Basic", name: "price_basic", widget: "string" },
-                            { label: "Pret Complet", name: "price_complet", widget: "string" },
-                            { label: "Titlu Hero", name: "hero_title", widget: "string" }
-                        ]
-                    }]
-                }]
-            }
-        });
+    <!-- Loading overlay -->
+    <div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-xl shadow-xl flex items-center gap-3">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            <span class="text-lg font-semibold">Se salvează...</span>
+        </div>
+    </div>
 
-        // Încărcare automată date din GitHub în input-uri
-        function loadCurrentData() {
-            const entry = CMS.getEntry('setari', 'home');
-            if (entry) {
-                const data = entry.get('data').toJS();
-                if(data.price_basic) document.getElementById('in-basic').value = data.price_basic;
-                if(data.price_complet) document.getElementById('in-complet').value = data.price_complet;
-                if(data.phone) document.getElementById('in-phone').value = data.phone;
+    <script>
+        // Verifică dacă e deja autentificat (session)
+        if (sessionStorage.getItem('admin_logged') === 'true') {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('adminPanel').classList.remove('hidden');
+            loadData();
+        }
+
+        // Autentificare
+        function login() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            
+            if (user === 'admin' && pass === 'admin2026') {
+                sessionStorage.setItem('admin_logged', 'true');
+                document.getElementById('loginForm').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+                document.getElementById('loginError').classList.add('hidden');
+                loadData();
+                showTab('text');
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
             }
         }
-        setTimeout(loadCurrentData, 2000);
 
-        function handleSave(field, inputId) {
-            const val = document.getElementById(inputId).value;
-            try {
-                window.CMS.getEditor().setFieldValue(field, val);
-                alert("Gata! Acum apasă butonul albastru 'Publish' (sus) pentru a trimite prețul live.");
-            } catch (e) { alert("Eroare: Loghează-te cu Token-ul GitHub mai întâi."); }
+        function logout() {
+            sessionStorage.removeItem('admin_logged');
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('adminPanel').classList.add('hidden');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        // Tabs
+        function showTab(tab) {
+            // Ascunde toate tab-urile
+            document.getElementById('tabTextContent').classList.add('hidden');
+            document.getElementById('tabImagesContent').classList.add('hidden');
+            document.getElementById('tabContactContent').classList.add('hidden');
+            document.getElementById('tabServicesContent').classList.add('hidden');
+            
+            // Arată tab-ul selectat
+            document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1) + 'Content').classList.remove('hidden');
+            
+            // Activează butonul
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-white');
+            });
+            document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('bg-primary', 'text-white');
+        }
+
+        // Previzualizare imagine
+        function previewImage(input, previewId) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(previewId).innerHTML = `<img src="${e.target.result}" class="preview-image">`;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Încărcare date
+        function loadData() {
+            fetch('/data/content.json?t=' + new Date().getTime())
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('hero_title').value = data.hero_title || '';
+                    document.getElementById('hero_subtitle').value = data.hero_subtitle || '';
+                    document.getElementById('price_basic').value = data.price_basic || '';
+                    document.getElementById('price_complet').value = data.price_complet || '';
+                    document.getElementById('phone').value = data.phone || '';
+                    document.getElementById('address').value = data.address || '';
+                    document.getElementById('program_week').value = data.program_week || '';
+                    document.getElementById('program_sat').value = data.program_sat || '';
+                    document.getElementById('service1_desc').value = data.service1_desc || '';
+                    document.getElementById('service2_desc').value = data.service2_desc || '';
+                    document.getElementById('service3_desc').value = data.service3_desc || '';
+                    document.getElementById('service4_desc').value = data.service4_desc || '';
+                    
+                    // Afișează imaginile dacă există
+                    if (data.header_image) {
+                        document.getElementById('headerPreview').innerHTML = `<img src="${data.header_image}" class="preview-image">`;
+                    }
+                    if (data.logo_image) {
+                        document.getElementById('logoPreview').innerHTML = `<img src="${data.logo_image}" class="preview-image">`;
+                    }
+                })
+                .catch(error => {
+                    console.log('Nu există date salvate sau eroare la încărcare');
+                });
+        }
+
+        // Salvare modificări
+        function saveChanges() {
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+            
+            const data = {
+                hero_title: document.getElementById('hero_title').value,
+                hero_subtitle: document.getElementById('hero_subtitle').value,
+                price_basic: document.getElementById('price_basic').value,
+                price_complet: document.getElementById('price_complet').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                program_week: document.getElementById('program_week').value,
+                program_sat: document.getElementById('program_sat').value,
+                service1_desc: document.getElementById('service1_desc').value,
+                service2_desc: document.getElementById('service2_desc').value,
+                service3_desc: document.getElementById('service3_desc').value,
+                service4_desc: document.getElementById('service4_desc').value
+            };
+
+            // Salvare în fișier JSON
+            fetch('/api/save-data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+                alert('✅ Date salvate cu succes!');
+            })
+            .catch(error => {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+                alert('❌ Eroare la salvare! Verifică conexiunea.');
+                console.error(error);
+            });
         }
     </script>
 </body>
