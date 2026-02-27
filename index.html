@@ -1,259 +1,339 @@
 <!DOCTYPE html>
-<html lang="ro" class="scroll-smooth">
+<html lang="ro">
 <head>
     <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Instalări Windows ┃ Mioveni - Servicii IT Profesionale</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#195de6",
-                        "background-light": "#f6f6f8",
-                        "background-dark": "#111621",
-                    },
-                    fontFamily: {
-                        "display": ["Inter", "sans-serif"]
-                    },
-                },
-            },
-        }
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin - Windows Mioveni</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        .success-message { animation: slideIn 0.3s, fadeOut 3s forwards; }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; } }
+        .preview-image { max-width: 200px; max-height: 150px; object-fit: cover; border-radius: 8px; margin-top: 10px; border: 2px solid #195de6; }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
-
-    <nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center gap-2">
-                    <div class="bg-primary p-2 rounded-lg">
-                        <span class="material-icons text-white" id="header-icon">desktop_windows</span>
-                    </div>
-                    <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-                        Windows<span class="text-primary">Mioveni</span>
-                    </span>
-                </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a class="text-sm font-semibold text-primary" href="#">Acasă</a>
-                    <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#servicii">Servicii</a>
-                    <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#preturi">Prețuri</a>
-                    <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#contact">Contact</a>
-                </div>
-                <div class="hidden md:block">
-                    <a class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 text-primary font-bold hover:bg-primary/20 transition-all" href="tel:0748123456" id="phone-link">
-                        <span class="material-icons text-sm">phone</span>
-                        <span id="phone-text">0748 123 456</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <header class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-background-light dark:bg-background-dark">
-        <div class="absolute inset-0 z-0">
-            <img alt="Clean workspace" class="w-full h-full object-cover opacity-20" id="header-image" src="https://images.unsplash.com/photo-1588702547919-26089e690eca?auto=format&fit=crop&q=80&w=2070"/>
-            <div class="absolute inset-0 bg-gradient-to-r from-background-light via-background-light/95 to-transparent dark:from-background-dark dark:via-background-dark/95"></div>
-        </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-24">
-            <div class="max-w-3xl">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-6 border border-primary/20">
-                    <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                    </span>
-                    Servicii Disponibile în Mioveni
-                </div>
-                <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white leading-tight mb-6" id="hero-title">
-                    Instalări Windows <span class="text-primary">┃</span> Mioveni
-                </h1>
-                <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed mb-10 max-w-2xl" id="hero-subtitle">
-                    Servicii profesionale de instalare sisteme de operare, actualizare drivere și optimizare software pentru performanță maximă.
-                </p>
-                <div class="flex flex-col sm:flex-row items-center gap-4">
-                    <a href="#contact" class="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 group">
-                        Programare Rapidă
-                        <span class="material-icons group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                    </a>
-                    <a href="#preturi" class="w-full sm:w-auto px-8 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-center text-slate-700 dark:text-slate-200 font-bold rounded-xl transition-all">
-                        Vezi Prețuri
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <section id="servicii" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-            <div class="inline-block px-4 py-1.5 mb-4 text-sm font-semibold tracking-wide uppercase text-primary bg-primary/10 rounded-full">Soluții IT Profesionale</div>
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">Serviciile Noastre</h2>
-            <div class="w-20 h-1.5 bg-primary mx-auto rounded-full mb-6"></div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="group p-8 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all flex flex-col h-full">
-                <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
-                    <span class="material-icons-outlined text-3xl text-primary group-hover:text-white">window</span>
-                </div>
-                <h3 class="text-xl font-bold mb-3">Instalare Windows</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow" id="service1-desc">Instalare profesională pentru Windows 10 și 11, activare licență și configurări inițiale.</p>
-            </div>
-            <div class="group p-8 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all flex flex-col h-full">
-                <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
-                    <span class="material-icons-outlined text-3xl text-primary group-hover:text-white">speed</span>
-                </div>
-                <h3 class="text-xl font-bold mb-3">Optimizare Sistem</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow" id="service2-desc">Curățare software, eliminare fișiere temporare și optimizare startup.</p>
-            </div>
-            <div class="group p-8 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all flex flex-col h-full">
-                <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
-                    <span class="material-icons-outlined text-3xl text-primary group-hover:text-white">settings_suggest</span>
-                </div>
-                <h3 class="text-xl font-bold mb-3">Drivere & Programe</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow" id="service3-desc">Instalare drivere compatibile, suită Office și browsere.</p>
-            </div>
-            <div class="group p-8 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all flex flex-col h-full">
-                <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
-                    <span class="material-icons-outlined text-3xl text-primary group-hover:text-white">settings_backup_restore</span>
-                </div>
-                <h3 class="text-xl font-bold mb-3">Recuperare Date</h3>
-                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow" id="service4-desc">Recuperare profesională a fișierelor pierdute sau șterse accidental.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="preturi" class="py-20 px-4">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Servicii și Tarife</h2>
-            </div>
-            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-8 flex flex-col hover:shadow-md transition-all">
-                    <h3 class="text-xl font-bold mb-2">Pachet Basic</h3>
-                    <div class="text-4xl font-bold my-6" id="price-basic">100 RON</div>
-                    <ul class="space-y-4 mb-10 flex-grow">
-                        <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Instalare Windows (10/11)</span></li>
-                        <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Drivere de bază</span></li>
-                    </ul>
-                    <a href="#contact" class="w-full py-3 rounded-lg border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all text-center">Solicită Pachet</a>
-                </div>
-                <div class="bg-white dark:bg-slate-800 rounded-xl border-2 border-primary p-8 flex flex-col relative transform scale-105 shadow-xl">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white px-4 py-1 rounded-full text-xs font-bold uppercase">Recomandat</div>
-                    <h3 class="text-xl font-bold mb-2">Pachet Complet</h3>
-                    <div class="text-4xl font-bold my-6" id="price-complet">180 RON</div>
-                    <ul class="space-y-4 mb-10 flex-grow">
-                        <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Windows + Optimizare</span></li>
-                        <li class="flex items-center gap-3"><span class="material-icons text-primary text-sm">check_circle</span><span>Backup date & Office</span></li>
-                    </ul>
-                    <a href="#contact" class="w-full py-3 rounded-lg bg-primary text-white font-bold hover:bg-blue-700 transition-all shadow-lg shadow-primary/20 text-center">Solicită Pachet</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="py-20 bg-slate-50 dark:bg-slate-900/50">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="grid lg:grid-cols-2 gap-12">
-                <div>
-                    <h2 class="text-3xl font-bold mb-6">Contactează-ne</h2>
-                    <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                        <form class="space-y-4" id="contact-form">
-                            <input class="w-full px-4 py-2 rounded border border-slate-300 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-primary" placeholder="Nume" type="text" name="nume" required/>
-                            <input class="w-full px-4 py-2 rounded border border-slate-300 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-primary" placeholder="Telefon" type="tel" name="telefon" required/>
-                            <textarea class="w-full px-4 py-2 rounded border border-slate-300 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-primary" placeholder="Mesaj" name="mesaj" rows="4" required></textarea>
-                            <button type="submit" class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-all">Trimite Mesaj</button>
-                        </form>
-                        <div id="form-message" class="mt-4 text-center hidden"></div>
-                    </div>
-                </div>
-                <div class="space-y-8">
-                    <div class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
-                        <h3 class="font-bold mb-4 flex items-center gap-2"><span class="material-icons text-primary">schedule</span>Program</h3>
-                        <p class="flex justify-between border-b pb-2"><span>Luni - Vineri</span><b id="program-week">09:00 - 18:00</b></p>
-                        <p class="flex justify-between pt-2"><span>Sâmbătă</span><b id="program-sat">10:00 - 14:00</b></p>
-                        <div class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
-                            <p class="flex items-center gap-2"><span class="material-icons text-primary">phone</span> <a href="tel:0748123456" id="footer-phone" class="hover:text-primary">0748 123 456</a></p>
-                            <p class="flex items-center gap-2 mt-2"><span class="material-icons text-primary">location_on</span> <span id="address">Strada Principală, Mioveni</span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-8">
-        <div class="max-w-6xl mx-auto px-4 text-center text-sm text-slate-500">
-            <p>© 2025 Service IT Mioveni. Toate drepturile rezervate.</p>
-        </div>
-    </footer>
+<body class="bg-slate-100 font-sans">
 
     <script>
-        // Încărcare date din JSON
-        fetch('/data/content.json?t=' + new Date().getTime())
-            .then(response => response.json())
-            .then(data => {
-                // Text
-                if (data.hero_title) document.getElementById('hero-title').innerHTML = data.hero_title;
-                if (data.hero_subtitle) document.getElementById('hero-subtitle').textContent = data.hero_subtitle;
-                
-                // Prețuri
-                if (data.price_basic) document.getElementById('price-basic').textContent = data.price_basic;
-                if (data.price_complet) document.getElementById('price-complet').textContent = data.price_complet;
-                
-                // Telefon
-                if (data.phone) {
-                    document.getElementById('phone-text').textContent = data.phone;
-                    document.getElementById('phone-link').href = 'tel:' + data.phone.replace(/\s/g, '');
-                    document.getElementById('footer-phone').textContent = data.phone;
-                    document.getElementById('footer-phone').href = 'tel:' + data.phone.replace(/\s/g, '');
-                }
-                
-                // Adresă
-                if (data.address) document.getElementById('address').textContent = data.address;
-                
-                // Program
-                if (data.program_week) document.getElementById('program-week').textContent = data.program_week;
-                if (data.program_sat) document.getElementById('program-sat').textContent = data.program_sat;
-                
-                // Servicii descrieri
-                if (data.service1_desc) document.getElementById('service1-desc').textContent = data.service1_desc;
-                if (data.service2_desc) document.getElementById('service2-desc').textContent = data.service2_desc;
-                if (data.service3_desc) document.getElementById('service3-desc').textContent = data.service3_desc;
-                if (data.service4_desc) document.getElementById('service4-desc').textContent = data.service4_desc;
-                
-                // Imagini
-                if (data.header_image) document.getElementById('header-image').src = data.header_image;
-                if (data.logo_image) document.getElementById('header-icon').textContent = '';
-
-                console.log('Date încărcate cu succes!');
-            })
-            .catch(err => console.log('Nu s-au putut încărca datele:', err));
-
-        // Formular contact
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            const data = {
-                nume: formData.get('nume'),
-                telefon: formData.get('telefon'),
-                mesaj: formData.get('mesaj')
-            };
-            
-            // Aici poți trimite email folosind un serviciu
-            console.log('Formular trimis:', data);
-            
-            document.getElementById('form-message').classList.remove('hidden');
-            document.getElementById('form-message').innerHTML = 'Mesajul a fost trimis! Vom reveni în curând.';
-            document.getElementById('form-message').classList.add('bg-green-100', 'text-green-700', 'p-3', 'rounded');
-            this.reset();
-        });
+        // ===== LOGIN SIMPLU =====
+        const utilizatorCorect = "admin";
+        const parolaCorecta = "admin2026";
+        
+        const utilizator = prompt("👤 Utilizator:");
+        const parola = prompt("🔐 Parolă:");
+        
+        if (utilizator !== utilizatorCorect || parola !== parolaCorecta) { 
+            alert("❌ Acces respins!");
+            window.location.href = "/"; 
+        }
     </script>
+
+    <div class="max-w-6xl mx-auto px-4 py-12">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <div class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-full mb-4">
+                <span class="material-icons">admin_panel_settings</span>
+                <span class="font-bold">ADMIN PANEL</span>
+            </div>
+            <h1 class="text-3xl font-bold text-slate-800 mb-2">Panou Control - Windows Mioveni</h1>
+            <p class="text-slate-500">Modifică prețuri, text, contact și servicii</p>
+            <div class="w-20 h-1 bg-blue-600 mx-auto rounded-full mt-4"></div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex flex-wrap gap-2 mb-6 bg-white p-2 rounded-xl shadow-sm">
+            <button onclick="showTab('preturi')" id="tab-preturi" class="tab-btn px-6 py-3 rounded-lg font-semibold bg-blue-600 text-white">💰 Prețuri</button>
+            <button onclick="showTab('contact')" id="tab-contact" class="tab-btn px-6 py-3 rounded-lg font-semibold">📞 Contact</button>
+            <button onclick="showTab('text')" id="tab-text" class="tab-btn px-6 py-3 rounded-lg font-semibold">📝 Text</button>
+            <button onclick="showTab('servicii')" id="tab-servicii" class="tab-btn px-6 py-3 rounded-lg font-semibold">⚙️ Servicii</button>
+            <button onclick="showTab('imagini')" id="tab-imagini" class="tab-btn px-6 py-3 rounded-lg font-semibold">🖼️ Imagini</button>
+        </div>
+
+        <!-- Tab: Prețuri -->
+        <div id="tab-preturi-content" class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-6">
+            <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-blue-700">
+                <span class="material-icons">payments</span> Prețuri Servicii
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Pachet Basic</label>
+                    <input id="price_basic" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none" placeholder="ex: 100 RON">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Pachet Complet</label>
+                    <input id="price_complet" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-blue-600 outline-none" placeholder="ex: 180 RON">
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Contact -->
+        <div id="tab-contact-content" class="hidden bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-6">
+            <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-emerald-700">
+                <span class="material-icons">contact_phone</span> Informații Contact
+            </h3>
+            <div class="grid gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Număr Telefon</label>
+                    <input id="phone" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-600 outline-none" placeholder="ex: 0748 123 456">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Adresă</label>
+                    <input id="address" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-600 outline-none" placeholder="ex: Strada Principală, Mioveni">
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Program Luni-Vineri</label>
+                        <input id="program_week" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-600 outline-none" placeholder="09:00 - 18:00">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">Program Sâmbătă</label>
+                        <input id="program_sat" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-600 outline-none" placeholder="10:00 - 14:00">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Text -->
+        <div id="tab-text-content" class="hidden bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-6">
+            <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-purple-700">
+                <span class="material-icons">edit</span> Text Principal
+            </h3>
+            <div class="grid gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Titlu Principal</label>
+                    <input id="hero_title" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-purple-600 outline-none" placeholder="Instalări Windows ┃ Mioveni">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Subtitlu</label>
+                    <textarea id="hero_subtitle" rows="3" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-purple-600 outline-none" placeholder="Descrierea principală..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Servicii -->
+        <div id="tab-servicii-content" class="hidden bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-6">
+            <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-orange-700">
+                <span class="material-icons">build</span> Descrieri Servicii
+            </h3>
+            <div class="grid gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Serviciu 1 - Instalare Windows</label>
+                    <textarea id="service1_desc" rows="2" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-orange-600 outline-none"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Serviciu 2 - Optimizare Sistem</label>
+                    <textarea id="service2_desc" rows="2" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-orange-600 outline-none"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Serviciu 3 - Drivere & Programe</label>
+                    <textarea id="service3_desc" rows="2" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-orange-600 outline-none"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Serviciu 4 - Recuperare Date</label>
+                    <textarea id="service4_desc" rows="2" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-orange-600 outline-none"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Imagini -->
+        <div id="tab-imagini-content" class="hidden bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-6">
+            <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-pink-700">
+                <span class="material-icons">image</span> Imagini
+            </h3>
+            <div class="grid gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">URL Imagine Header</label>
+                    <input id="header_image" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-pink-600 outline-none" placeholder="https://...">
+                    <div id="header-preview" class="mt-4"></div>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">URL Logo (opțional)</label>
+                    <input id="logo_image" type="text" class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-pink-600 outline-none" placeholder="https://...">
+                    <div id="logo-preview" class="mt-4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buton Salvare -->
+        <div class="text-center">
+            <button onclick="saveAllChanges()" class="px-12 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all text-lg">
+                <span class="flex items-center justify-center gap-3">
+                    <span class="material-icons">save</span>
+                    SALVEAZĂ TOATE MODIFICĂRILE ÎN JSON
+                </span>
+            </button>
+            <p class="text-sm text-slate-500 mt-4">⚠️ Modificările vor fi salvate în data/content.json</p>
+        </div>
+
+        <!-- Mesaje -->
+        <div id="message-container" class="fixed bottom-4 right-4 z-50"></div>
+    </div>
+
+    <script>
+        // ===== VARIABILE GLOBALE =====
+        let currentData = {};
+
+        // ===== FUNCȚII TAB-URI =====
+        function showTab(tabName) {
+            // Ascunde toate tab-urile
+            document.getElementById('tab-preturi-content').classList.add('hidden');
+            document.getElementById('tab-contact-content').classList.add('hidden');
+            document.getElementById('tab-text-content').classList.add('hidden');
+            document.getElementById('tab-servicii-content').classList.add('hidden');
+            document.getElementById('tab-imagini-content').classList.add('hidden');
+            
+            // Arată tab-ul selectat
+            document.getElementById(`tab-${tabName}-content`).classList.remove('hidden');
+            
+            // Actualizează butoanele
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white');
+                btn.classList.add('bg-white', 'text-slate-700');
+            });
+            document.getElementById(`tab-${tabName}`).classList.add('bg-blue-600', 'text-white');
+        }
+
+        // ===== ÎNCĂRCARE DATE =====
+        function loadData() {
+            fetch('/data/content.json?t=' + new Date().getTime())
+                .then(response => response.json())
+                .then(data => {
+                    currentData = data;
+                    
+                    // Prețuri
+                    document.getElementById('price_basic').value = data.price_basic || '100 RON';
+                    document.getElementById('price_complet').value = data.price_complet || '180 RON';
+                    
+                    // Contact
+                    document.getElementById('phone').value = data.phone || '0748 123 456';
+                    document.getElementById('address').value = data.address || 'Strada Principală, Mioveni';
+                    document.getElementById('program_week').value = data.program_week || '09:00 - 18:00';
+                    document.getElementById('program_sat').value = data.program_sat || '10:00 - 14:00';
+                    
+                    // Text
+                    document.getElementById('hero_title').value = data.hero_title || 'Instalări Windows ┃ Mioveni';
+                    document.getElementById('hero_subtitle').value = data.hero_subtitle || 'Servicii profesionale de instalare...';
+                    
+                    // Servicii
+                    document.getElementById('service1_desc').value = data.service1_desc || 'Instalare profesională pentru Windows 10 și 11, activare licență și configurări inițiale.';
+                    document.getElementById('service2_desc').value = data.service2_desc || 'Curățare software, eliminare fișiere temporare și optimizare startup.';
+                    document.getElementById('service3_desc').value = data.service3_desc || 'Instalare drivere compatibile, suită Office și browsere.';
+                    document.getElementById('service4_desc').value = data.service4_desc || 'Recuperare profesională a fișierelor pierdute sau șterse accidental.';
+                    
+                    // Imagini
+                    document.getElementById('header_image').value = data.header_image || 'https://images.unsplash.com/photo-1588702547919-26089e690eca';
+                    document.getElementById('logo_image').value = data.logo_image || '';
+                    
+                    // Previzualizare imagini
+                    if (data.header_image) {
+                        document.getElementById('header-preview').innerHTML = `<img src="${data.header_image}" class="preview-image">`;
+                    }
+                    if (data.logo_image) {
+                        document.getElementById('logo-preview').innerHTML = `<img src="${data.logo_image}" class="preview-image">`;
+                    }
+                    
+                    showMessage('✅ Date încărcate cu succes', 'green');
+                })
+                .catch(err => {
+                    console.log('Eroare la încărcare:', err);
+                    showMessage('❌ Eroare la încărcarea datelor', 'red');
+                });
+        }
+
+        // ===== SALVARE DATE =====
+        function saveAllChanges() {
+            // Colectează toate datele
+            const newData = {
+                hero_title: document.getElementById('hero_title').value,
+                hero_subtitle: document.getElementById('hero_subtitle').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                program_week: document.getElementById('program_week').value,
+                program_sat: document.getElementById('program_sat').value,
+                price_basic: document.getElementById('price_basic').value,
+                price_complet: document.getElementById('price_complet').value,
+                service1_desc: document.getElementById('service1_desc').value,
+                service2_desc: document.getElementById('service2_desc').value,
+                service3_desc: document.getElementById('service3_desc').value,
+                service4_desc: document.getElementById('service4_desc').value,
+                header_image: document.getElementById('header_image').value,
+                logo_image: document.getElementById('logo_image').value
+            };
+
+            showMessage('💾 Se salvează...', 'blue');
+
+            // Salvare în fișier JSON (prin API)
+            fetch('/api/save-data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newData)
+            })
+            .then(response => response.json())
+            .then(result => {
+                showMessage('✅ Date salvate cu succes în content.json', 'green');
+                console.log('Date salvate:', newData);
+            })
+            .catch(error => {
+                console.error('Eroare:', error);
+                showMessage('❌ Eroare la salvare. Verifică consola (F12)', 'red');
+                
+                // Backup în localStorage
+                localStorage.setItem('backup_data', JSON.stringify(newData));
+                showMessage('💾 Backup salvat în browser', 'yellow');
+            });
+        }
+
+        // ===== AFIȘARE MESAJ =====
+        function showMessage(text, color) {
+            const container = document.getElementById('message-container');
+            const msg = document.createElement('div');
+            msg.className = `bg-${color}-500 text-white px-6 py-4 rounded-lg shadow-lg mb-2 success-message flex items-center gap-2`;
+            msg.innerHTML = `<span class="material-icons">${color === 'green' ? 'check_circle' : color === 'red' ? 'error' : 'info'}</span> ${text}`;
+            container.appendChild(msg);
+            
+            setTimeout(() => {
+                msg.remove();
+            }, 3000);
+        }
+
+        // ===== PREVIZUALIZARE IMAGINI =====
+        document.getElementById('header_image').addEventListener('input', function() {
+            if (this.value) {
+                document.getElementById('header-preview').innerHTML = `<img src="${this.value}" class="preview-image">`;
+            }
+        });
+        
+        document.getElementById('logo_image').addEventListener('input', function() {
+            if (this.value) {
+                document.getElementById('logo-preview').innerHTML = `<img src="${this.value}" class="preview-image">`;
+            }
+        });
+
+        // ===== LA ÎNCĂRCARE =====
+        window.onload = function() {
+            loadData();
+            showTab('preturi'); // Arată tab-ul de prețuri prima dată
+        };
+    </script>
+
+    <!-- Instrucțiuni -->
+    <div class="max-w-6xl mx-auto px-4 mt-8">
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 text-sm text-blue-800">
+            <h4 class="font-bold mb-2 flex items-center gap-2">
+                <span class="material-icons text-blue-600">info</span>
+                Cum funcționează:
+            </h4>
+            <ol class="list-decimal ml-8 space-y-1">
+                <li>Modifică ce ai nevoie în fiecare tab</li>
+                <li>Apasă "SALVEAZĂ TOATE MODIFICĂRILE ÎN JSON"</li>
+                <li>Fișierul <code>data/content.json</code> se actualizează</li>
+                <li>Site-ul se va actualiza automat (are deja fetch la JSON)</li>
+            </ol>
+            <p class="mt-4 text-yellow-700 bg-yellow-50 p-3 rounded-lg">
+                <span class="font-bold">⚠️ ATENȚIE:</span> Pentru ca salvarea să funcționeze, ai nevoie de un API endpoint la <code>/api/save-data</code>. Dacă nu ai, datele se salvează în localStorage.
+            </p>
+        </div>
+    </div>
 </body>
 </html>
