@@ -195,73 +195,8 @@
     </footer>
 
     <script>
-        // Încărcare date din JSON
-        fetch('/data/content.json?t=' + new Date().getTime())
-            .then(response => response.json())
-            .then(data => {
-                // Text
-                if (data.hero_title) document.getElementById('hero-title').innerHTML = data.hero_title;
-                if (data.hero_subtitle) document.getElementById('hero-subtitle').textContent = data.hero_subtitle;
-                
-                // Prețuri
-                if (data.price_basic) document.getElementById('price-basic').textContent = data.price_basic;
-                if (data.price_complet) document.getElementById('price-complet').textContent = data.price_complet;
-                
-                // Telefon
-                if (data.phone) {
-                    document.getElementById('phone-text').textContent = data.phone;
-                    document.getElementById('phone-link').href = 'tel:' + data.phone.replace(/\s/g, '');
-                    document.getElementById('footer-phone').textContent = data.phone;
-                    document.getElementById('footer-phone').href = 'tel:' + data.phone.replace(/\s/g, '');
-                }
-                
-                // Adresă
-                if (data.address) document.getElementById('address').textContent = data.address;
-                
-                // Program
-                if (data.program_week) document.getElementById('program-week').textContent = data.program_week;
-                if (data.program_sat) document.getElementById('program-sat').textContent = data.program_sat;
-                
-                // Servicii descrieri
-                if (data.service1_desc) document.getElementById('service1-desc').textContent = data.service1_desc;
-                if (data.service2_desc) document.getElementById('service2-desc').textContent = data.service2_desc;
-                if (data.service3_desc) document.getElementById('service3-desc').textContent = data.service3_desc;
-                if (data.service4_desc) document.getElementById('service4-desc').textContent = data.service4_desc;
-                
-                // Imagini
-                if (data.header_image) document.getElementById('header-image').src = data.header_image;
-                if (data.logo_image) document.getElementById('header-icon').textContent = '';
-
-                console.log('Date încărcate cu succes!');
-                window.dataLoaded = true; // Marchează că datele s-au încărcat
-            })
-            .catch(err => {
-                console.log('Nu s-au putut încărca datele:', err);
-                window.dataLoaded = false;
-            });
-
-        // Formular contact
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            const data = {
-                nume: formData.get('nume'),
-                telefon: formData.get('telefon'),
-                mesaj: formData.get('mesaj')
-            };
-            
-            console.log('Formular trimis:', data);
-            
-            document.getElementById('form-message').classList.remove('hidden');
-            document.getElementById('form-message').innerHTML = 'Mesajul a fost trimis! Vom reveni în curând.';
-            document.getElementById('form-message').classList.add('bg-green-100', 'text-green-700', 'p-3', 'rounded');
-            this.reset();
-        });
-    </script>
-
-    <!-- Backup system - dacă nu se încarcă JSON, folosește aceste date -->
-    <script>
-        const backupData = {
+        // ===== DATE IMPLICITE =====
+        const defaultData = {
             hero_title: "Instalări Windows ┃ Mioveni",
             hero_subtitle: "Servicii profesionale de instalare sisteme de operare, actualizare drivere și optimizare software pentru performanță maximă.",
             phone: "0748 123 456",
@@ -277,43 +212,65 @@
             header_image: "https://images.unsplash.com/photo-1588702547919-26089e690eca?auto=format&fit=crop&q=80&w=2070"
         };
 
-        // Verifică dacă fetch-ul a eșuat
-        setTimeout(() => {
-            if (!window.dataLoaded) {
-                console.log('⚠️ Folosesc datele de backup');
-                
-                if (document.getElementById('hero-title')) 
-                    document.getElementById('hero-title').innerHTML = backupData.hero_title;
-                if (document.getElementById('hero-subtitle')) 
-                    document.getElementById('hero-subtitle').textContent = backupData.hero_subtitle;
-                if (document.getElementById('phone-text')) {
-                    document.getElementById('phone-text').textContent = backupData.phone;
-                    document.getElementById('phone-link').href = 'tel:' + backupData.phone.replace(/\s/g, '');
-                    document.getElementById('footer-phone').textContent = backupData.phone;
-                    document.getElementById('footer-phone').href = 'tel:' + backupData.phone.replace(/\s/g, '');
-                }
-                if (document.getElementById('address')) 
-                    document.getElementById('address').textContent = backupData.address;
-                if (document.getElementById('program-week')) 
-                    document.getElementById('program-week').textContent = backupData.program_week;
-                if (document.getElementById('program-sat')) 
-                    document.getElementById('program-sat').textContent = backupData.program_sat;
-                if (document.getElementById('price-basic')) 
-                    document.getElementById('price-basic').textContent = backupData.price_basic;
-                if (document.getElementById('price-complet')) 
-                    document.getElementById('price-complet').textContent = backupData.price_complet;
-                if (document.getElementById('service1-desc')) 
-                    document.getElementById('service1-desc').textContent = backupData.service1_desc;
-                if (document.getElementById('service2-desc')) 
-                    document.getElementById('service2-desc').textContent = backupData.service2_desc;
-                if (document.getElementById('service3-desc')) 
-                    document.getElementById('service3-desc').textContent = backupData.service3_desc;
-                if (document.getElementById('service4-desc')) 
-                    document.getElementById('service4-desc').textContent = backupData.service4_desc;
-                if (document.getElementById('header-image')) 
-                    document.getElementById('header-image').src = backupData.header_image;
+        // ===== APLICĂ DATELE PE SITE =====
+        function applyData(data) {
+            if (document.getElementById('hero-title')) 
+                document.getElementById('hero-title').innerHTML = data.hero_title;
+            if (document.getElementById('hero-subtitle')) 
+                document.getElementById('hero-subtitle').textContent = data.hero_subtitle;
+            if (document.getElementById('phone-text')) {
+                document.getElementById('phone-text').textContent = data.phone;
+                document.getElementById('phone-link').href = 'tel:' + data.phone.replace(/\s/g, '');
+                document.getElementById('footer-phone').textContent = data.phone;
+                document.getElementById('footer-phone').href = 'tel:' + data.phone.replace(/\s/g, '');
             }
-        }, 1500);
+            if (document.getElementById('address')) 
+                document.getElementById('address').textContent = data.address;
+            if (document.getElementById('program-week')) 
+                document.getElementById('program-week').textContent = data.program_week;
+            if (document.getElementById('program-sat')) 
+                document.getElementById('program-sat').textContent = data.program_sat;
+            if (document.getElementById('price-basic')) 
+                document.getElementById('price-basic').textContent = data.price_basic;
+            if (document.getElementById('price-complet')) 
+                document.getElementById('price-complet').textContent = data.price_complet;
+            if (document.getElementById('service1-desc')) 
+                document.getElementById('service1-desc').textContent = data.service1_desc;
+            if (document.getElementById('service2-desc')) 
+                document.getElementById('service2-desc').textContent = data.service2_desc;
+            if (document.getElementById('service3-desc')) 
+                document.getElementById('service3-desc').textContent = data.service3_desc;
+            if (document.getElementById('service4-desc')) 
+                document.getElementById('service4-desc').textContent = data.service4_desc;
+            if (document.getElementById('header-image')) 
+                document.getElementById('header-image').src = data.header_image;
+        }
+
+        // ===== ÎNCERCĂ SĂ ÎNCARCE DIN LOCALSTORAGE =====
+        const savedData = localStorage.getItem('siteData');
+        if (savedData) {
+            try {
+                const data = JSON.parse(savedData);
+                applyData(data);
+                console.log('Date încărcate din localStorage');
+            } catch (e) {
+                applyData(defaultData);
+            }
+        } else {
+            applyData(defaultData);
+        }
+
+        // ===== FORMULAR CONTACT =====
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            console.log('Formular trimis:', Object.fromEntries(formData));
+            
+            document.getElementById('form-message').classList.remove('hidden');
+            document.getElementById('form-message').innerHTML = 'Mesajul a fost trimis! Vom reveni în curând.';
+            document.getElementById('form-message').classList.add('bg-green-100', 'text-green-700', 'p-3', 'rounded');
+            this.reset();
+        });
     </script>
 </body>
 </html>
