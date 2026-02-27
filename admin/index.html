@@ -208,4 +208,92 @@
                 program_sat: document.getElementById('program_sat').value,
                 price_basic: document.getElementById('price_basic').value,
                 price_complet: document.getElementById('price_complet').value,
-                service1_desc: document
+                service1_desc: document.getElementById('service1_desc').value,
+                service2_desc: document.getElementById('service2_desc').value,
+                service3_desc: document.getElementById('service3_desc').value,
+                service4_desc: document.getElementById('service4_desc').value,
+                header_image: document.getElementById('header_image').value
+            };
+
+            // Salvare în localStorage
+            localStorage.setItem('siteData', JSON.stringify(newData));
+            
+            // Afișează mesaj
+            showMessage('✅ Date salvate cu succes în localStorage!', 'green');
+            
+            // Afișează datele în consolă pentru verificare
+            console.log('Date salvate:', newData);
+        }
+
+        // ===== AFIȘARE MESAJ =====
+        function showMessage(text, color) {
+            const container = document.getElementById('message-container');
+            const msg = document.createElement('div');
+            msg.className = `bg-${color}-500 text-white px-6 py-4 rounded-lg shadow-lg mb-2 success-message flex items-center gap-2`;
+            msg.innerHTML = `<span class="material-icons">${color === 'green' ? 'check_circle' : 'info'}</span> ${text}`;
+            container.appendChild(msg);
+            
+            setTimeout(() => {
+                msg.remove();
+            }, 3000);
+        }
+
+        // ===== PREVIZUALIZARE IMAGINI =====
+        document.getElementById('header_image').addEventListener('input', function() {
+            if (this.value) {
+                document.getElementById('header-preview').innerHTML = `<img src="${this.value}" class="preview-image">`;
+            }
+        });
+
+        // ===== ÎNCĂRCARE DATE SALVATE =====
+        function loadSavedData() {
+            const saved = localStorage.getItem('siteData');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    
+                    document.getElementById('hero_title').value = data.hero_title || '';
+                    document.getElementById('hero_subtitle').value = data.hero_subtitle || '';
+                    document.getElementById('phone').value = data.phone || '';
+                    document.getElementById('address').value = data.address || '';
+                    document.getElementById('program_week').value = data.program_week || '';
+                    document.getElementById('program_sat').value = data.program_sat || '';
+                    document.getElementById('price_basic').value = data.price_basic || '';
+                    document.getElementById('price_complet').value = data.price_complet || '';
+                    document.getElementById('service1_desc').value = data.service1_desc || '';
+                    document.getElementById('service2_desc').value = data.service2_desc || '';
+                    document.getElementById('service3_desc').value = data.service3_desc || '';
+                    document.getElementById('service4_desc').value = data.service4_desc || '';
+                    document.getElementById('header_image').value = data.header_image || '';
+                    
+                    showMessage('✅ Date încărcate din localStorage', 'green');
+                } catch (e) {
+                    console.log('Eroare la încărcare');
+                }
+            }
+        }
+
+        // ===== LA ÎNCĂRCARE =====
+        window.onload = function() {
+            loadSavedData();
+            showTab('preturi');
+        };
+    </script>
+
+    <!-- Instrucțiuni -->
+    <div class="max-w-6xl mx-auto px-4 mt-8">
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 text-sm text-blue-800">
+            <h4 class="font-bold mb-2 flex items-center gap-2">
+                <span class="material-icons text-blue-600">info</span>
+                Instrucțiuni:
+            </h4>
+            <ol class="list-decimal ml-8 space-y-1">
+                <li><span class="font-semibold">Login:</span> admin / admin2026</li>
+                <li><span class="font-semibold">Modifică</span> ce ai nevoie în fiecare tab</li>
+                <li><span class="font-semibold">Apasă "SALVEAZĂ"</span> - datele se salvează în localStorage</li>
+                <li><span class="font-semibold">Pagina principală</span> va afișa automat datele salvate</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>
