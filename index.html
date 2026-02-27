@@ -194,8 +194,9 @@
         </div>
     </footer>
 
+    <!-- Script pentru încărcare date -->
     <script>
-        // ===== DATE IMPLICITE =====
+        // Date implicite
         const defaultData = {
             hero_title: "Instalări Windows ┃ Mioveni",
             hero_subtitle: "Servicii profesionale de instalare sisteme de operare, actualizare drivere și optimizare software pentru performanță maximă.",
@@ -212,7 +213,7 @@
             header_image: "https://images.unsplash.com/photo-1588702547919-26089e690eca?auto=format&fit=crop&q=80&w=2070"
         };
 
-        // ===== APLICĂ DATELE PE SITE =====
+        // Funcție pentru aplicarea datelor
         function applyData(data) {
             if (document.getElementById('hero-title')) 
                 document.getElementById('hero-title').innerHTML = data.hero_title;
@@ -246,7 +247,7 @@
                 document.getElementById('header-image').src = data.header_image;
         }
 
-        // ===== ÎNCERCĂ SĂ ÎNCARCE DIN LOCALSTORAGE =====
+        // Încarcă datele salvate din localStorage
         const savedData = localStorage.getItem('siteData');
         if (savedData) {
             try {
@@ -260,11 +261,10 @@
             applyData(defaultData);
         }
 
-        // ===== FORMULAR CONTACT =====
+        // Formular contact
         document.getElementById('contact-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = new FormData(this);
-            console.log('Formular trimis:', Object.fromEntries(formData));
             
             document.getElementById('form-message').classList.remove('hidden');
             document.getElementById('form-message').innerHTML = 'Mesajul a fost trimis! Vom reveni în curând.';
